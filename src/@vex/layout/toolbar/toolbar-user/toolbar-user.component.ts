@@ -12,11 +12,13 @@ export class ToolbarUserComponent implements OnInit {
 
   dropdownOpen: boolean;
   icPerson = icPerson;
-
+  info_admin=localStorage.getItem('currentAdmin')
+  admin=JSON.parse(this.info_admin);
   constructor(private popover: PopoverService,
               private cd: ChangeDetectorRef) { }
 
   ngOnInit() {
+    console.log("---",this.admin)
   }
 
   showPopover(originRef: HTMLElement) {

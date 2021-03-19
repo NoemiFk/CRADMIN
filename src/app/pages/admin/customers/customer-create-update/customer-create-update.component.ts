@@ -12,6 +12,7 @@ import icPerson from '@iconify/icons-ic/twotone-person';
 import icMyLocation from '@iconify/icons-ic/twotone-my-location';
 import icLocationCity from '@iconify/icons-ic/twotone-location-city';
 import icEditLocation from '@iconify/icons-ic/twotone-edit-location';
+import {Services} from '../../../../Services/services'
 
 @Component({
   selector: 'vex-customer-create-update',
@@ -24,6 +25,7 @@ export class CustomerCreateUpdateComponent implements OnInit {
 
   form: FormGroup;
   mode: 'create' | 'update' = 'create';
+  agency={};
 
   icMoreVert = icMoreVert;
   icClose = icClose;
@@ -40,26 +42,59 @@ export class CustomerCreateUpdateComponent implements OnInit {
 
   constructor(@Inject(MAT_DIALOG_DATA) public defaults: any,
               private dialogRef: MatDialogRef<CustomerCreateUpdateComponent>,
-              private fb: FormBuilder) {
+              private fb: FormBuilder,
+              private Services: Services) {
   }
 
   ngOnInit() {
     if (this.defaults) {
       this.mode = 'update';
+      let customer= this.defaults;
+      console.log(this.defaults)
+      this.defaults= {
+        "_id":customer._id,
+      "name": customer.name,
+      "nameAgency": customer.nameAgency,
+      "email": customer.email,
+      "phone": customer.phone,
+      "RFC": customer.RFC,
+        "city": customer.address.city,
+        "state": customer.address.state,
+        "municipality": customer.address.municipality,
+        "address1": customer.address.address1,
+        "address2": customer.address.address2,
+        "int": customer.address.int,
+        "ext": customer.address.ext,
+        "zipcode": customer.address.zipcode,
+        "payment": 500,
+        "date": customer.contract.date,
+        "plan": customer.contract.plan
+      }
+      console.log(this.defaults)
     } else {
       this.defaults = {} as Customer;
     }
-
     this.form = this.fb.group({
-      id: [CustomerCreateUpdateComponent.id++],
       imageSrc: this.defaults.imageSrc,
-      firstName: [this.defaults.firstName || ''],
-      lastName: [this.defaults.lastName || ''],
-      street: this.defaults.street || '',
+      nameAgency: [this.defaults.nameAgency || ''],
+      name: [this.defaults.name || ''],
+      RFC: [this.defaults.RFC || ''],
+      address1: this.defaults.address1 || '',
+      address2: this.defaults.address2 || '',
       city: this.defaults.city || '',
       zipcode: this.defaults.zipcode || '',
-      phoneNumber: this.defaults.phoneNumber || '',
-      notes: this.defaults.notes || ''
+      country: this.defaults.country || '', 
+      municipality: this.defaults.municipality || '',
+      state: this.defaults.state || '',
+      int: this.defaults.int || '',
+      ext: this.defaults.ext || '',
+      payment: this.defaults.payment || '',
+      date: this.defaults.date || '',
+      plan: this.defaults.plan || '',
+      permission: this.defaults.permission || '',
+      phone: this.defaults.phone || '',
+      email: this.defaults.email || ''
+      
     });
   }
 
@@ -78,7 +113,48 @@ export class CustomerCreateUpdateComponent implements OnInit {
       customer.imageSrc = 'assets/img/avatars/1.jpg';
     }
 
-    this.dialogRef.close(customer);
+    let body= {
+      "name": customer.name,
+      "nameAgency": customer.nameAgency,
+      "email": customer.email,
+      "phone": customer.phone,
+      "RFC": customer.RFC,
+      "address": {
+        "city": customer.city,
+        "state": customer.state,
+        "municipality": customer.municipality,
+        "address1": customer.address1,
+        "address2": customer.address2,
+        "int": customer.int,
+        "ext": customer.ext,
+        "zipcode": customer.zipcode
+      },
+      "contract": {
+        "payment": 500,
+        "date": customer.date,
+        "plan": customer.plan
+      }
+    }
+     console.log(body)
+      this.createAgency(body);
+     
+
+    
+  }
+
+  createAgency(body) {
+    this.Services.createAgency(body)
+    .subscribe(
+        data => {
+          console.log("Hola ", data)
+          if(data.success){
+            this.agency=data.data
+            this.dialogRef.close(data.data);
+          }
+        },
+        error => {
+          //this.error=true
+        });
   }
 
   updateCustomer() {

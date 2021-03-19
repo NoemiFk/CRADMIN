@@ -37,8 +37,8 @@ export class AuthenticationService {
                 
                 console.log("login admin",admin)
                 if (admin) {
-                    localStorage.setItem('currentAdmin', JSON.stringify(admin));
-                    localStorage.setItem('Token', JSON.stringify(admin.token));
+                    localStorage.setItem('currentAdmin', JSON.stringify(admin.data));
+                    localStorage.setItem('Token', JSON.stringify(admin.data.token));
                 }
 
                 return admin;
@@ -48,7 +48,7 @@ export class AuthenticationService {
     logout() {
         // remove user from local storage to log user out
         localStorage.removeItem('currentAdmin');
-        localStorage.removeItem('oken');
+        localStorage.removeItem('Token');
     }
     encryptUsingAES256(pass) {
         let _key = CryptoJS.enc.Hex.parse(CryptoSecret);

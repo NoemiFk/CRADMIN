@@ -13,8 +13,8 @@
           </div>
 
           <div @fadeInRight>
-            <p class="m-0 body-1">+1 (930) 502-3182</p>
-            <p class="m-0 caption text-hint">Business</p>
+            <p class="m-0 body-1">{{admin.phone}}</p>
+            <p class="m-0 caption text-hint">Telefono--</p>
           </div>
         </div>
 
@@ -25,8 +25,8 @@
           </div>
 
           <div @fadeInRight>
-            <p class="m-0 body-1">Web Developer at IceCube</p>
-            <p class="m-0 caption text-hint">Previously Designer at HotStuff</p>
+            <p class="m-0 body-1">{{}}</p>
+            <p class="m-0 caption text-hint">Dirreccion</p>
           </div>
         </div>
 
@@ -37,8 +37,8 @@
           </div>
 
           <div @fadeInRight>
-            <p class="m-0 body-1">david.smith@example.com</p>
-            <p class="m-0 caption text-hint">Business inquiries only</p>
+            <p class="m-0 body-1">{{admin.email}}</p>
+            <p class="m-0 caption text-hint">Correo Electronico</p>
           </div>
         </div>
 
@@ -49,8 +49,8 @@
           </div>
 
           <div @fadeInRight>
-            <p class="m-0 body-1">Usually available 9am-5pm</p>
-            <p class="m-0 caption text-hint">Call +1 (930) 242-5186 for important things</p>
+            <p class="m-0 body-1">{{admin.user}}</p>
+            <p class="m-0 caption text-hint">Usuario</p>
           </div>
         </div>
 
@@ -60,7 +60,7 @@
             <ic-icon [icon]="icAdd" size="20px"></ic-icon>
           </div>
 
-          <p @fadeInRight class="m-0 body-1 cursor-pointer">Add an address</p>
+          <p @fadeInRight class="m-0 body-1 cursor-pointer">Editar Información</p>
         </div>
 
         <div class="py-3" fxLayout="row" fxLayoutAlign="start center">
@@ -69,51 +69,11 @@
             <ic-icon [icon]="icWhatshot" size="20px"></ic-icon>
           </div>
 
-          <p @fadeInRight class="m-0 body-1 cursor-pointer">Add social profiles</p>
+          <p @fadeInRight class="m-0 body-1 cursor-pointer">Cambiar Contraseña</p>
         </div>
       </div>
     </div>
 
-    <div class="card mt-6">
-      <div class="px-gutter py-4 border-b">
-        <h2 class="title m-0">Latest Photos</h2>
-      </div>
-
-      <div @stagger
-           class="px-gutter py-4"
-           gdColumns="1fr 1fr 1fr 1fr"
-           gdColumns.lt-lg="1fr 1fr 1fr"
-           gdColumns.xs="1fr 1fr"
-           gdGap="24px">
-        <img *ngFor="let i of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]"
-             @scaleIn
-             class="rounded w-full"
-             gdGridAlign="center"
-             src="assets/img/avatars/{{ i }}.jpg"/>
-      </div>
-    </div>
   </div>
 
-  <div class="card max-w-unset md:max-w-xs w-full flex-none md:ltr:ml-6 md:rtl:mr-6 mt-6 md:mt-0">
-    <div class="px-6 py-4 border-b">
-      <h2 class="title m-0">Friend Suggestions</h2>
-    </div>
-
-    <div @stagger class="px-6 py-4" fxLayout="column" fxLayoutGap="16px">
-      <div *ngFor="let friend of suggestions; trackBy: trackByName" fxLayout="row" fxLayoutAlign="start center">
-        <img @scaleIn [src]="friend.imageSrc" alt="Profile Picture" class="avatar ltr:mr-3 rtl:ml-3" fxFlex="none"/>
-        <div @fadeInRight fxFlex="auto">
-          <h4 class="body-2 m-0 leading-snug">{{ friend.name }}</h4>
-          <h5 class="text-secondary m-0 caption leading-none">{{ friend.friends }} mutual friends</h5>
-        </div>
-        <button (click)="addFriend(friend)" *ngIf="!friend.added" color="primary" mat-icon-button type="button">
-          <mat-icon [icIcon]="icPersonAdd"></mat-icon>
-        </button>
-
-        <button (click)="removeFriend(friend)" *ngIf="friend.added" color="primary" mat-icon-button type="button">
-          <mat-icon [icIcon]="icCheck"></mat-icon>
-        </button>
-      </div>
-    </div>
-  </div>
 </div>

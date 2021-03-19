@@ -37,10 +37,12 @@ export class SocialProfileComponent implements OnInit {
   icAccessTime = icAccessTime;
   icAdd = icAdd;
   icWhatshot = icWhatshot;
-
+  info_admin=localStorage.getItem('currentAdmin')
+  admin=JSON.parse(this.info_admin);
   constructor() { }
 
   ngOnInit(): void {
+    console.log(this.admin)
   }
 
   addFriend(friend: FriendSuggestion) {

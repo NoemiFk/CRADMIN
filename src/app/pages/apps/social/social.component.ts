@@ -26,8 +26,8 @@ export class SocialComponent implements OnInit {
       label: 'ABOUT',
       route: './',
       routerLinkActiveOptions: { exact: true }
-    },
-    {
+    }
+    /*{
       label: 'TIMELINE',
       route: './timeline'
     },
@@ -40,11 +40,16 @@ export class SocialComponent implements OnInit {
       label: 'PHOTOS',
       route: '',
       disabled: true
-    }
+    }*/
   ];
 
-  constructor() { }
+  info_admin=localStorage.getItem('currentAdmin')
+  admin=JSON.parse(this.info_admin);
 
-  ngOnInit() {
+constructor() { }
+
+ngOnInit() {
+  this.admin=JSON.parse(this.info_admin)
+    console.log(this.admin)
   }
 }

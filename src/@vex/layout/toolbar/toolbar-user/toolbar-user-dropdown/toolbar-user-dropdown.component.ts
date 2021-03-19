@@ -109,12 +109,14 @@ export class ToolbarUserDropdownComponent implements OnInit {
   icVerifiedUser = icVerifiedUser;
   icLock = icLock;
   icNotificationsOff = icNotificationsOff;
-
+  info_admin=localStorage.getItem('currentAdmin')
+  admin=JSON.parse(this.info_admin);
   constructor(private cd: ChangeDetectorRef,
               private AuthenticationService: AuthenticationService,
               private popoverRef: PopoverRef<ToolbarUserDropdownComponent>) { }
 
   ngOnInit() {
+    console.log(this.admin)
   }
 
   setStatus(status: OnlineStatus) {
@@ -124,6 +126,8 @@ export class ToolbarUserDropdownComponent implements OnInit {
 
   close() {
     this.popoverRef.close();
+  }
+  logout(){
     this.AuthenticationService.logout()
   }
 }

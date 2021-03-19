@@ -9,6 +9,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { TableColumn } from '../../../../@vex/interfaces/table-column.interface';
 import { aioTableData, aioTableLabels } from '../../../../static-data/aio-table-data';
 import { CustomerCreateUpdateComponent } from './customer-create-update/customer-create-update.component';
+import { CustomerDeleteComponent } from './customer-delete/customer-delete.component';
+
 import icEdit from '@iconify/icons-ic/twotone-edit';
 import icDelete from '@iconify/icons-ic/twotone-delete';
 import icSearch from '@iconify/icons-ic/twotone-search';
@@ -26,6 +28,8 @@ import { MatSelectChange } from '@angular/material/select';
 import icPhone from '@iconify/icons-ic/twotone-phone';
 import icMail from '@iconify/icons-ic/twotone-mail';
 import icMap from '@iconify/icons-ic/twotone-map';
+
+import {Services} from '../../../Services/services'
 
 
 @UntilDestroy()
@@ -57,21 +61,31 @@ export class AioTableComponent implements OnInit, AfterViewInit {
   subject$: ReplaySubject<Customer[]> = new ReplaySubject<Customer[]>(1);
   data$: Observable<Customer[]> = this.subject$.asObservable();
   customers: Customer[];
+  AgenciesList:[];
+
+
 
   @Input()
   columns: TableColumn<Customer>[] = [
     { label: 'Checkbox', property: 'checkbox', type: 'checkbox', visible: true },
-    { label: 'Image', property: 'image', type: 'image', visible: true },
-    { label: 'Name', property: 'name', type: 'text', visible: true, cssClasses: ['font-medium'] },
-    { label: 'First Name', property: 'firstName', type: 'text', visible: false },
-    { label: 'Last Name', property: 'lastName', type: 'text', visible: false },
-    { label: 'Contact', property: 'contact', type: 'button', visible: true },
-    { label: 'Address', property: 'address', type: 'text', visible: true, cssClasses: ['text-secondary', 'font-medium'] },
-    { label: 'Street', property: 'street', type: 'text', visible: false, cssClasses: ['text-secondary', 'font-medium'] },
-    { label: 'Zipcode', property: 'zipcode', type: 'text', visible: false, cssClasses: ['text-secondary', 'font-medium'] },
-    { label: 'City', property: 'city', type: 'text', visible: false, cssClasses: ['text-secondary', 'font-medium'] },
-    { label: 'Phone', property: 'phoneNumber', type: 'text', visible: true, cssClasses: ['text-secondary', 'font-medium'] },
-    { label: 'Labels', property: 'labels', type: 'button', visible: true },
+    { label: 'Imagen', property: 'image', type: 'image', visible: true },
+    { label: 'Agencia', property: 'nameAgency', type: 'text', visible: true, cssClasses: ['font-medium'] },
+    { label: 'RFC', property: 'RFC', type: 'text', visible: true, cssClasses: ['text-secondary', 'font-medium'] },
+    { label: 'Nombre', property: 'name', type: 'text', visible: true },
+    { label: 'Telefono', property: 'phone', type: 'text', visible: true },
+    { label: 'E-mail', property: 'email', type: 'text', visible: true },
+    { label: 'Calle', property: 'address1', type: 'object', object:'address',visible: true, cssClasses: ['text-secondary', 'font-medium'] },
+    { label: 'No. Int', property: 'int', type: 'object', object:'address', visible: true },
+    { label: 'No. Ext', property: 'ext', type: 'object', object:'address', visible: false },
+    { label: 'C.P', property: 'zipcode', type: 'object', object:'address', visible: true, cssClasses: ['text-secondary', 'font-medium'] },
+    { label: 'Colonia', property: 'address2', type: 'object', object:'address', visible: false },
+    { label: 'Municipio', property: 'municipality', type: 'object', object:'address', visible: false },
+    { label: 'Ciudad', property: 'city', type: 'object', object:'address', visible: false, cssClasses: ['text-secondary', 'font-medium'] },
+    { label: 'Estado', property: 'state', type: 'object', object:'address', visible: false, cssClasses: ['text-secondary', 'font-medium'] },
+    { label: 'Pais', property: 'country', type: 'object', object:'address', visible: false },
+    { label: 'Plan', property: 'plan', type: 'object', object:'contract', visible: false },
+    { label: 'Contrato', property: 'date', type: 'object', object:'contract', visible: false },
+    { label: 'Pago', property: 'payment', type: 'object', object:'contract', visible: false },
     { label: 'Actions', property: 'actions', type: 'button', visible: true }
   ];
   pageSize = 10;
@@ -96,7 +110,7 @@ export class AioTableComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(private dialog: MatDialog) {
+  constructor(private dialog: MatDialog,  private Services: Services,) {
   }
 
   get visibleColumns() {
@@ -107,32 +121,53 @@ export class AioTableComponent implements OnInit, AfterViewInit {
    * Example on how to get data and pass it to the table - usually you would want a dedicated service with a HTTP request for this
    * We are simulating this request here.
    */
-  getData() {
-    return of(aioTableData.map(customer => new Customer(customer)));
+  getData(list) {
+    console.log("-->",list)
+    return of(list.map(customer => customer));
+  }
+  getAgenciesList() {
+    this.Services.getAgenciesList()
+    .subscribe(
+        data => {
+          console.log("Hola ", data)
+          if(data.success){
+            this.AgenciesList=data.data
+            
+            //return this.AgenciesList;
+            this.getData(this.AgenciesList).subscribe(customers => {
+              this.subject$.next(customers);
+            });
+            //this.dataSource = new MatTableDataSource();
+
+          this.data$.pipe(
+            filter<Customer[]>(Boolean)
+          ).subscribe(customers => {
+            console.log(customers)
+            this.customers = customers;
+            this.dataSource.data = customers; //this.AgenciesList;
+          });
+          console.log("-->",this.dataSource)
+          this.searchCtrl.valueChanges.pipe(
+            untilDestroyed(this)
+          ).subscribe(value => this.onFilterChange(value));
+            //this.ClientAddList=data.data
+            //console.log("--",this.usersList)
+          }
+        },
+        error => {
+          //this.error=true
+        });
   }
 
   ngOnInit() {
-    this.getData().subscribe(customers => {
-      this.subject$.next(customers);
-    });
-
     this.dataSource = new MatTableDataSource();
-
-    this.data$.pipe(
-      filter<Customer[]>(Boolean)
-    ).subscribe(customers => {
-      this.customers = customers;
-      this.dataSource.data = customers;
-    });
-
-    this.searchCtrl.valueChanges.pipe(
-      untilDestroyed(this)
-    ).subscribe(value => this.onFilterChange(value));
+    this.getAgenciesList();
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    console.log("-->",this.dataSource)
   }
 
   createCustomer() {
@@ -145,7 +180,7 @@ export class AioTableComponent implements OnInit, AfterViewInit {
          * Here we are updating our local array.
          * You would probably make an HTTP request here.
          */
-        this.customers.unshift(new Customer(customer));
+        this.customers.unshift(customer);
         this.subject$.next(this.customers);
       }
     });
@@ -163,7 +198,7 @@ export class AioTableComponent implements OnInit, AfterViewInit {
          * Here we are updating our local array.
          * You would probably make an HTTP request here.
          */
-        const index = this.customers.findIndex((existingCustomer) => existingCustomer.id === updatedCustomer.id);
+        const index = this.customers.findIndex((existingCustomer) => existingCustomer._id === updatedCustomer._id);
         this.customers[index] = new Customer(updatedCustomer);
         this.subject$.next(this.customers);
       }
@@ -175,9 +210,23 @@ export class AioTableComponent implements OnInit, AfterViewInit {
      * Here we are updating our local array.
      * You would probably make an HTTP request here.
      */
-    this.customers.splice(this.customers.findIndex((existingCustomer) => existingCustomer.id === customer.id), 1);
-    this.selection.deselect(customer);
-    this.subject$.next(this.customers);
+
+    this.dialog.open(CustomerDeleteComponent, {
+      data: customer
+    }).afterClosed().subscribe(updatedCustomer => {
+      /**
+       * Customer is the updated customer (if the user pressed Save - otherwise it's null)
+       */
+      if (updatedCustomer) {
+        /**
+         * Here we are updating our local array.
+         * You would probably make an HTTP request here.
+         */
+        this.customers.splice(this.customers.findIndex((existingCustomer) => existingCustomer._id === customer._id), 1);
+        this.selection.deselect(customer);
+        this.subject$.next(this.customers);
+      }
+    });
   }
 
   deleteCustomers(customers: Customer[]) {
@@ -223,7 +272,7 @@ export class AioTableComponent implements OnInit, AfterViewInit {
 
   onLabelChange(change: MatSelectChange, row: Customer) {
     const index = this.customers.findIndex(c => c === row);
-    this.customers[index].labels = change.value;
+    //this.customers[index].labels = change.value;
     this.subject$.next(this.customers);
   }
 }
