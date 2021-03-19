@@ -21,13 +21,13 @@ import { Icon } from '@visurel/iconify-angular';
 import { PopoverRef } from '../../../../components/popover/popover-ref';
 import { AuthenticationService } from '../../../../../app/Services/AuthenticationService';
 
-export interface OnlineStatus {
+/*export interface OnlineStatus {
   id: 'online' | 'away' | 'dnd' | 'offline';
   label: string;
   icon: Icon;
   colorClass: string;
 }
-
+*/
 @Component({
   selector: 'vex-toolbar-user-dropdown',
   templateUrl: './toolbar-user-dropdown.component.html',
@@ -45,7 +45,7 @@ export class ToolbarUserDropdownComponent implements OnInit {
       colorClass: 'text-teal',
       route: '/apps/social'
     },
-    {
+    /*{
       id: '2',
       icon: icMoveToInbox,
       label: 'My Inbox',
@@ -68,7 +68,7 @@ export class ToolbarUserDropdownComponent implements OnInit {
       description: 'Pricing & Current Plan',
       colorClass: 'text-purple',
       route: '/pages/pricing'
-    }
+    }*/
   ];
 
   statuses: OnlineStatus[] = [
@@ -98,7 +98,7 @@ export class ToolbarUserDropdownComponent implements OnInit {
     }
   ];
 
-  activeStatus: OnlineStatus = this.statuses[0];
+  //activeStatus: OnlineStatus = this.statuses[0];
 
   trackById = trackById;
   icPerson = icPerson;
