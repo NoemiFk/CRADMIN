@@ -51,4 +51,38 @@ export class Services {
               return resp;
           });
     }
+
+    ///
+    getPlansList() {
+        return this.http.get<any>(URL+'/agencies')
+            .map(resp => {
+             
+                console.log(" getPlansList",resp)
+                return resp;
+            });
+    }
+    updatePlan(id:string, body:object) {
+      return this.http.put<any>(URL+'/agency/'+id,body)
+          .map(resp => {
+           
+              console.log("updatePlan",resp)
+              return resp;
+          });
+    }
+    deletePlan(id:string) {
+      return this.http.delete<any>(URL+'/agency/'+id)
+          .map(resp => {
+           
+              console.log("deletePlan",resp)
+              return resp;
+          });
+    }
+    createPlan(body:object) {
+      return this.http.post<any>(URL+'/agency/',body)
+          .map(resp => {
+           
+              console.log("createPlan",resp)
+              return resp;
+          });
+    }
 }
