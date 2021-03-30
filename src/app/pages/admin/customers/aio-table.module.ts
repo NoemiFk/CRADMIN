@@ -7,6 +7,7 @@ import { PageLayoutModule } from '../../../../@vex/components/page-layout/page-l
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BreadcrumbsModule } from '../../../../@vex/components/breadcrumbs/breadcrumbs.module';
 import { CustomerCreateUpdateModule } from './customer-create-update/customer-create-update.module';
+import { CustomerCreateUsersModule } from './customer-create-user/customer-create-user.module';
 import { CustomerDeleteModule } from './customer-delete/customer-delete.module';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
@@ -32,6 +33,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     FlexLayoutModule,
     BreadcrumbsModule,
     CustomerCreateUpdateModule,
+    CustomerCreateUsersModule,
     MatPaginatorModule,
     MatTableModule,
     MatSortModule,

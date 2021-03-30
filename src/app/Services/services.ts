@@ -54,7 +54,7 @@ export class Services {
 
     ///
     getPlansList() {
-        return this.http.get<any>(URL+'/agencies')
+        return this.http.get<any>(URL+'/plans')
             .map(resp => {
              
                 console.log(" getPlansList",resp)
@@ -62,7 +62,7 @@ export class Services {
             });
     }
     updatePlan(id:string, body:object) {
-      return this.http.put<any>(URL+'/agency/'+id,body)
+      return this.http.put<any>(URL+'/plan/'+id,body)
           .map(resp => {
            
               console.log("updatePlan",resp)
@@ -70,7 +70,7 @@ export class Services {
           });
     }
     deletePlan(id:string) {
-      return this.http.delete<any>(URL+'/agency/'+id)
+      return this.http.delete<any>(URL+'/plan/'+id)
           .map(resp => {
            
               console.log("deletePlan",resp)
@@ -78,10 +78,36 @@ export class Services {
           });
     }
     createPlan(body:object) {
-      return this.http.post<any>(URL+'/agency/',body)
+      return this.http.post<any>(URL+'/plan/',body)
           .map(resp => {
            
               console.log("createPlan",resp)
+              return resp;
+          });
+    }
+
+    // Users
+    getUsersList(id:string) {
+      return this.http.get<any>(URL+'/agency/users/'+id)
+          .map(resp => {
+           
+              console.log(" getUsersList",resp)
+              return resp;
+          });
+    }
+    deleteUser(id:string) {
+      return this.http.delete<any>(URL+'/agency/user/'+id)
+          .map(resp => {
+          
+              console.log("deleteUser",resp)
+              return resp;
+          });
+    }
+    createUser(body:object) {
+      return this.http.post<any>(URL+'/agency/user',body)
+          .map(resp => {
+          
+              console.log("createUser",resp)
               return resp;
           });
     }

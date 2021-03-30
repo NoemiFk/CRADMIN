@@ -10,7 +10,7 @@ import { TableColumn } from '../../../../@vex/interfaces/table-column.interface'
 import { aioTableData, aioTableLabels } from '../../../../static-data/aio-table-data';
 import { CustomerCreateUpdateComponent } from './customer-create-update/customer-create-update.component';
 import { CustomerDeleteComponent } from './customer-delete/customer-delete.component';
-
+import { CustomerUsersComponent } from './customer-create-user/customer-create-user.component';
 import icEdit from '@iconify/icons-ic/twotone-edit';
 import icDelete from '@iconify/icons-ic/twotone-delete';
 import icSearch from '@iconify/icons-ic/twotone-search';
@@ -235,6 +235,29 @@ export class AioTableComponent implements OnInit, AfterViewInit {
      * You would probably make an HTTP request here.
      */
     customers.forEach(c => this.deleteCustomer(c));
+  }
+
+  usersCustomer(customer: Customer) {
+    /**
+     * Here we are updating our local array.
+     * You would probably make an HTTP request here.
+     */
+
+    this.dialog.open(CustomerUsersComponent, {
+      data: customer
+    }).afterClosed().subscribe(usersCustomer => {
+      /**
+       * Customer is the updated customer (if the user pressed Save - otherwise it's null)
+       */
+      if (usersCustomer) {
+        /**
+         * Here we are updating our local array.
+         * You would probably make an HTTP request here.
+         */
+        this.selection.deselect(customer);
+        this.subject$.next(this.customers);
+      }
+    });
   }
 
   onFilterChange(value: string) {

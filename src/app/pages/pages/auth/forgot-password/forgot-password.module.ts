@@ -9,12 +9,14 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { IconModule } from '@visurel/iconify-angular';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 @NgModule({
   declarations: [ForgotPasswordComponent],
   imports: [
     CommonModule,
+    MatSnackBarModule,
     ForgotPasswordRoutingModule,
     FlexLayoutModule,
     ReactiveFormsModule,

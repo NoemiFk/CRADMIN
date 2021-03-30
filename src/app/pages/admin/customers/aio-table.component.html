@@ -65,7 +65,7 @@
                 class="ml-4"
                 fxFlex="none"
                 mat-icon-button
-                matTooltip="Filter Columns"
+                matTooltip="Filtrar columnas"
                 type="button">
           <mat-icon [icIcon]="icFilterList"></mat-icon>
         </button>
@@ -75,7 +75,7 @@
                 color="primary"
                 fxFlex="none"
                 mat-mini-fab
-                matTooltip="Add Customer"
+                matTooltip="Crear Agencia"
                 type="button">
           <mat-icon [icIcon]="icAdd"></mat-icon>
         </button>
@@ -230,11 +230,15 @@
   <ng-template let-customer="customer" matMenuContent>
     <button (click)="updateCustomer(customer)" mat-menu-item>
       <mat-icon [icIcon]="icEdit"></mat-icon>
-      <span>Modify</span>
+      <span>Modificar</span>
     </button>
     <button (click)="deleteCustomer(customer)" mat-menu-item>
       <mat-icon [icIcon]="icDelete"></mat-icon>
-      <span>Delete</span>
+      <span>Eliminar</span>
+    </button>
+    <button (click)="usersCustomer(customer)" mat-menu-item>
+      <mat-icon [icIcon]="icAdd"></mat-icon>
+      <span>Agregar usuarios</span>
     </button>
   </ng-template>
 </mat-menu>

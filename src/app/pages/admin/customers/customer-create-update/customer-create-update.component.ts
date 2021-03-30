@@ -49,10 +49,12 @@ export class CustomerCreateUpdateComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getPlansList();
     if (this.defaults) {
       this.mode = 'update';
       let customer= this.defaults;
       console.log(this.defaults)
+     
       this.defaults= {
         "_id":customer._id,
       "name": customer.name,
@@ -60,17 +62,16 @@ export class CustomerCreateUpdateComponent implements OnInit {
       "email": customer.email,
       "phone": customer.phone,
       "RFC": customer.RFC,
-        "city": customer.address.city,
-        "state": customer.address.state,
-        "municipality": customer.address.municipality,
-        "address1": customer.address.address1,
-        "address2": customer.address.address2,
-        "int": customer.address.int,
-        "ext": customer.address.ext,
-        "zipcode": customer.address.zipcode,
-        "payment": 500,
-        "date": customer.contract.date,
-        "plan": customer.contract.plan
+      "city": customer.address.city,
+      "state": customer.address.state,
+      "municipality": customer.address.municipality,
+      "address1": customer.address.address1,
+      "address2": customer.address.address2,
+      "int": customer.address.int,
+      "ext": customer.address.ext,
+      "zipcode": customer.address.zipcode,
+      "date": customer.contract.date,
+      "plan_id": customer.contract.plan_id
       }
       console.log(this.defaults)
     } else {
@@ -90,10 +91,8 @@ export class CustomerCreateUpdateComponent implements OnInit {
       state: this.defaults.state || '',
       int: this.defaults.int || '',
       ext: this.defaults.ext || '',
-      payment: this.defaults.payment || '',
       date: this.defaults.date || '',
-      plan: this.defaults.plan || '',
-      permission: this.defaults.permission || '',
+      plan_id: this.defaults.plan_id || '',
       phone: this.defaults.phone || '',
       email: this.defaults.email || ''
       
@@ -132,16 +131,12 @@ export class CustomerCreateUpdateComponent implements OnInit {
         "zipcode": customer.zipcode
       },
       "contract": {
-        "payment": 500,
         "date": customer.date,
-        "plan": customer.plan
+        "plan_id": customer.plan_id
       }
     }
-     console.log(body)
+     console.log("--->",body)
       this.createAgency(body);
-     
-
-    
   }
 
   createAgency(body) {
@@ -164,6 +159,20 @@ export class CustomerCreateUpdateComponent implements OnInit {
     customer.id = this.defaults.id;
 
     this.dialogRef.close(customer);
+  }
+  PlansList=[]
+  getPlansList() {
+    this.Services.getPlansList()
+    .subscribe(
+        data => {
+          console.log("Hola ", data)
+          if(data.success){
+            this.PlansList=data.data;
+          }
+        },
+        error => {
+          //this.error=true
+        });
   }
 
   isCreateMode() {

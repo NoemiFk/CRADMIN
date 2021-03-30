@@ -45,6 +45,20 @@ export class AuthenticationService {
             });
     }
 
+    forgot(email: string) {
+      let body={
+          "email":email,
+      }
+
+      console.log("Login",body)
+      return this.http.post<any>(URL+'/admin/forgot',body)
+      
+          .map(admin => {
+              console.log("login admin",admin)
+              return admin;
+          });
+    }
+
     logout() {
         // remove user from local storage to log user out
         localStorage.removeItem('currentAdmin');
