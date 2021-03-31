@@ -11,7 +11,7 @@ const URL="http://localhost:3002"
 
 const httpOptions = {
     headers: new HttpHeaders({
-      'Authorization': 'my-auth-token',
+      'Authorization': '',
       "Access-Control-Allow-Headers":"origin, content-type, accept",
       "Access-Control-Allow-Origin":"*",
     })

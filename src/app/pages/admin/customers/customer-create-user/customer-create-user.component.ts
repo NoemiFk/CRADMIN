@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Customer } from '../interfaces/customer.model';
 import icMoreVert from '@iconify/icons-ic/twotone-more-vert';
+import { MatTableDataSource } from '@angular/material/table';
 import icClose from '@iconify/icons-ic/twotone-close';
 import icPrint from '@iconify/icons-ic/twotone-print';
 import icDownload from '@iconify/icons-ic/twotone-cloud-download';
@@ -15,14 +16,17 @@ import icEditLocation from '@iconify/icons-ic/twotone-edit-location';
 import icDollar from '@iconify/icons-ic/outline-money';
 import {Services} from '../../../../Services/services'
 
+
 @Component({
   selector: 'vex-customer-create-user',
   templateUrl: './customer-create-user.component.html',
   styleUrls: ['./customer-create-user.component.scss']
 })
 export class CustomerUsersComponent implements OnInit {
-
+  
   static id = 100;
+  displayedColumns: string[] = ['Usuario', 'E-mail', 'Rol', 'Acciones'];
+  dataSource = [];
 
   form: FormGroup;
   mode: 'create' | 'update' = 'create';
@@ -49,6 +53,8 @@ export class CustomerUsersComponent implements OnInit {
   }
 
   ngOnInit() {
+    //this.dataSource = new MatTableDataSource();
+    
     this.getUsersList();
     if (this.defaults) {
       let customer= this.defaults;
@@ -67,6 +73,8 @@ export class CustomerUsersComponent implements OnInit {
   }
 
 
+  
+
   user={};
   createUser() {
     const user = this.form.value;
@@ -82,6 +90,7 @@ export class CustomerUsersComponent implements OnInit {
           console.log("Hola ", data)
           if(data.success){
             this.user=data.data
+            this.getUsersList();
             //this.dialogRef.close(data.data);
           }
         },
@@ -89,7 +98,7 @@ export class CustomerUsersComponent implements OnInit {
           //this.error=true
         });
   }
-  usersList={}
+  //dataSource={}
   getUsersList(){
     let id= this.defaults._id;
     this.Services.getUsersList(id)
@@ -97,7 +106,8 @@ export class CustomerUsersComponent implements OnInit {
         data => {
           console.log("Hola ", data)
           if(data.success){
-            this.usersList=data.data
+            this.dataSource=data.data
+            //this.getUsersList();
             //this.dialogRef.close(data.data);
           }
         },
@@ -106,6 +116,20 @@ export class CustomerUsersComponent implements OnInit {
         });
   }
 
+  deleteUser(id){
+    
+    this.Services.deleteUser(id)
+    .subscribe(
+        data => {
+          console.log("Hola ", data)
+          if(data.success){
+            this.getUsersList();
+          }
+        },
+        error => {
+          //this.error=true
+        });
 
+  }
 
 }

@@ -24,7 +24,7 @@ const routes: VexRoutes = [
   {
     path: '',
     component: CustomLayoutComponent,
-    //canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
     children: [
       {
         path: 'dashboards/analytics',

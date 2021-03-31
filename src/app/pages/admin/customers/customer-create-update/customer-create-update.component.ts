@@ -157,8 +157,44 @@ export class CustomerCreateUpdateComponent implements OnInit {
   updateCustomer() {
     const customer = this.form.value;
     customer.id = this.defaults.id;
-
-    this.dialogRef.close(customer);
+    let body= {
+      "name": customer.name,
+      "nameAgency": customer.nameAgency,
+      "email": customer.email,
+      "phone": customer.phone,
+      "RFC": customer.RFC,
+      "address": {
+        "city": customer.city,
+        "state": customer.state,
+        "municipality": customer.municipality,
+        "address1": customer.address1,
+        "address2": customer.address2,
+        "int": customer.int,
+        "ext": customer.ext,
+        "zipcode": customer.zipcode
+      },
+      "contract": {
+        "date": customer.date,
+        "plan_id": customer.plan_id
+      }
+    }
+    this.updateAgency(body)
+    
+  }
+  updateAgency(body) {
+    let customer_id = this.defaults._id;
+    this.Services.updateAgency( customer_id, body)
+    .subscribe(
+        data => {
+          console.log("Hola ", data)
+          if(data.success){
+            this.agency=data.data
+            this.dialogRef.close(data.data);
+          }
+        },
+        error => {
+          //this.error=true
+        });
   }
   PlansList=[]
   getPlansList() {
