@@ -98,8 +98,8 @@ const routes: VexRoutes = [
             loadChildren: () => import('./pages/admin/customers/aio-table.module').then(m => m.AioTableModule),
           },
           {
-            path: 'briefcase',
-            loadChildren: () => import('./pages/admin/briefcase/briefcase.module').then(m => m.BriefcaseModule),
+            path: 'plans',
+            loadChildren: () => import("./pages/admin/plans/plan.module").then(m => m.PlanModule),
           },
           {
             path: 'analysis',
@@ -192,7 +192,8 @@ const routes: VexRoutes = [
     // preloadingStrategy: PreloadAllModules,
     scrollPositionRestoration: 'enabled',
     relativeLinkResolution: 'corrected',
-    anchorScrolling: 'enabled'
+    anchorScrolling: 'enabled',
+    useHash: true
   })],
   exports: [RouterModule]
 })

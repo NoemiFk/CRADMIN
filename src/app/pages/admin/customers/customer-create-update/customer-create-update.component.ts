@@ -53,7 +53,7 @@ export class CustomerCreateUpdateComponent implements OnInit {
     if (this.defaults) {
       this.mode = 'update';
       let customer= this.defaults;
-      console.log(this.defaults)
+      //console.log(this.defaults)
      
       this.defaults= {
         "_id":customer._id,
@@ -73,7 +73,7 @@ export class CustomerCreateUpdateComponent implements OnInit {
       "date": customer.contract.date,
       "plan_id": customer.contract.plan_id
       }
-      console.log(this.defaults)
+      //console.log(this.defaults)
     } else {
       this.defaults = {} as Customer;
     }
@@ -135,7 +135,7 @@ export class CustomerCreateUpdateComponent implements OnInit {
         "plan_id": customer.plan_id
       }
     }
-     console.log("--->",body)
+     //console.log("--->",body)
       this.createAgency(body);
   }
 
@@ -143,7 +143,7 @@ export class CustomerCreateUpdateComponent implements OnInit {
     this.Services.createAgency(body)
     .subscribe(
         data => {
-          console.log("Hola ", data)
+          //console.log("Hola ", data)
           if(data.success){
             this.agency=data.data
             this.dialogRef.close(data.data);
@@ -186,7 +186,7 @@ export class CustomerCreateUpdateComponent implements OnInit {
     this.Services.updateAgency( customer_id, body)
     .subscribe(
         data => {
-          console.log("Hola ", data)
+          //console.log("Hola ", data)
           if(data.success){
             this.agency=data.data
             this.dialogRef.close(data.data);
@@ -201,7 +201,7 @@ export class CustomerCreateUpdateComponent implements OnInit {
     this.Services.getPlansList()
     .subscribe(
         data => {
-          console.log("Hola ", data)
+          //console.log("Hola ", data)
           if(data.success){
             this.PlansList=data.data;
           }

@@ -116,7 +116,7 @@ export class ToolbarUserDropdownComponent implements OnInit {
               private popoverRef: PopoverRef<ToolbarUserDropdownComponent>) { }
 
   ngOnInit() {
-    console.log(this.admin)
+    //console.log(this.admin)
   }
 
   setStatus(status: OnlineStatus) {

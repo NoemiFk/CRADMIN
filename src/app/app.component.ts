@@ -120,14 +120,14 @@ export class AppComponent {
         children: [
           {
             type: 'link',
-            label: 'Clientes',
+            label: 'Agencias',
             route: '/admin/customers',
             icon: icPerson
           },
           {
             type: 'link',
-            label: 'Portafolios',
-            route: '/admin/briefcase',
+            label: 'Planes',
+            route: '/admin/plans',
             icon: icPortafolio
           },
           {
@@ -151,7 +151,7 @@ export class AppComponent {
         ]
       },
       ///////////////////////
-/*
+
       {
         type: 'subheading',
         label: 'Apps',
@@ -271,7 +271,7 @@ export class AppComponent {
           },
         ]
       },
-      {
+ /*     {
         type: 'subheading',
         label: 'Pages',
         children: [

@@ -25,7 +25,7 @@ import {Services} from '../../../../Services/services'
 export class CustomerUsersComponent implements OnInit {
   
   static id = 100;
-  displayedColumns: string[] = ['Usuario', 'E-mail', 'Rol', 'Acciones'];
+  displayedColumns: string[] = ['Usuario', 'E-mail', 'Password', 'Rol', 'Acciones'];
   dataSource = [];
 
   form: FormGroup;
@@ -62,7 +62,7 @@ export class CustomerUsersComponent implements OnInit {
       this.defaults= {
         "_id":customer._id,
       }
-      console.log(this.defaults)
+      //console.log(this.defaults)
     } 
     this.form = this.fb.group({
       name: [this.defaults.name || ''],
@@ -87,7 +87,7 @@ export class CustomerUsersComponent implements OnInit {
     this.Services.createUser(body)
     .subscribe(
         data => {
-          console.log("Hola ", data)
+          //console.log("Hola ", data)
           if(data.success){
             this.user=data.data
             this.getUsersList();
@@ -104,7 +104,7 @@ export class CustomerUsersComponent implements OnInit {
     this.Services.getUsersList(id)
     .subscribe(
         data => {
-          console.log("Hola ", data)
+          //console.log("Hola ", data)
           if(data.success){
             this.dataSource=data.data
             //this.getUsersList();
@@ -121,7 +121,7 @@ export class CustomerUsersComponent implements OnInit {
     this.Services.deleteUser(id)
     .subscribe(
         data => {
-          console.log("Hola ", data)
+          //console.log("Hola ", data)
           if(data.success){
             this.getUsersList();
           }

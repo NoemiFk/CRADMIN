@@ -42,7 +42,7 @@ export class SocialProfileComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.admin)
+    //console.log(this.admin)
   }
 
   addFriend(friend: FriendSuggestion) {

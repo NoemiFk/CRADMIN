@@ -50,6 +50,6 @@ constructor() { }
 
 ngOnInit() {
   this.admin=JSON.parse(this.info_admin)
-    console.log(this.admin)
+    //console.log(this.admin)
   }
 }

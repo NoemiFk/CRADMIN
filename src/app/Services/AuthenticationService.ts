@@ -7,6 +7,7 @@ import { CryptoSecret } from '../../../config';
 import 'rxjs/add/operator/map'
 
 const URL="http://localhost:3002"
+//const URL="http://34.217.90.9:3002"
 
 
 const httpOptions = {
@@ -24,18 +25,18 @@ export class AuthenticationService {
 
     login(email: string, password: string) {
         let pass= this.encryptUsingAES256(password)
-        console.log("PAss",pass)
+        //console.log("PAss",pass)
         let body={
             "email":email,
             "password":password
         }
 
-        console.log("Login",body)
+        //console.log("Login",body)
         return this.http.post<any>(URL+'/admin/login',body)
         
             .map(admin => {
                 
-                console.log("login admin",admin)
+                //console.log("login admin",admin)
                 if (admin) {
                     localStorage.setItem('currentAdmin', JSON.stringify(admin.data));
                     localStorage.setItem('Token', JSON.stringify(admin.data.token));
@@ -50,11 +51,11 @@ export class AuthenticationService {
           "email":email,
       }
 
-      console.log("Login",body)
+      //console.log("Login",body)
       return this.http.post<any>(URL+'/admin/forgot',body)
       
           .map(admin => {
-              console.log("login admin",admin)
+              //console.log("login admin",admin)
               return admin;
           });
     }

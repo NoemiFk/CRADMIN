@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Customer } from '../interfaces/customer.model';
+import { User } from '../interfaces/user.model';
 import icMoreVert from '@iconify/icons-ic/twotone-more-vert';
 import icClose from '@iconify/icons-ic/twotone-close';
 import icPrint from '@iconify/icons-ic/twotone-print';
@@ -15,17 +15,17 @@ import icEditLocation from '@iconify/icons-ic/twotone-edit-location';
 import {Services} from '../../../../Services/services'
 
 @Component({
-  selector: 'vex-customer-delete',
-  templateUrl: './customer-delete.component.html',
-  styleUrls: ['./customer-delete.component.scss']
+  selector: 'vex-plan',
+  templateUrl: './user-delete.component.html',
+  styleUrls: ['./user-delete.component.scss']
 })
-export class CustomerDeleteComponent implements OnInit {
+export class UserDeleteComponent implements OnInit {
 
   static id = 100;
 
   form: FormGroup;
   mode: 'delete';
-  agency={};
+  plan={}; 
 
   icMoreVert = icMoreVert;
   icClose = icClose;
@@ -41,34 +41,29 @@ export class CustomerDeleteComponent implements OnInit {
   icPhone = icPhone;
 
   constructor(@Inject(MAT_DIALOG_DATA) public defaults: any,
-              private dialogRef: MatDialogRef<CustomerDeleteComponent>,
+              private dialogRef: MatDialogRef<UserDeleteComponent>,
               private fb: FormBuilder,
               private Services: Services) {
   }
 
   ngOnInit() {
     if (this.defaults) {
-      let customer= this.defaults;
+      let plan= this.defaults;
       //console.log(this.defaults)
     } 
     
   }
 
   save() {
-      this.deleteCustomer();
+      this.deleteUser(this.defaults._id);
   }
 
-  deleteCustomer() {
-    //customer._id = this.defaults._id;
-      this.deleteAgency(this.defaults._id);
-  }
-
-  deleteAgency(id) {
-    this.Services.deleteAgency(id)
+  deleteUser(id) {
+    this.Services.deleteUser(id)
     .subscribe(
         data => {
           if(data.success){
-            this.agency=data.data
+            this.plan=data.data
             this.dialogRef.close(data.data);
           }
         },

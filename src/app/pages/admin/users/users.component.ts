@@ -1,14 +1,15 @@
 import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Observable, of, ReplaySubject } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { Customer } from './interfaces/briefcase.model';
+import { User } from './interfaces/user.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { TableColumn } from '../../../../@vex/interfaces/table-column.interface';
 import { aioTableData, aioTableLabels } from '../../../../static-data/aio-table-data';
-import { BriefcaseCreateUpdateComponent } from './briefcase-create-update/briefcase-create-update.component';
+import { UserCreateUpdateComponent } from './user-create-update/user-create-update.component';
+import { UserDeleteComponent } from './user-delete/user-delete.component';
 import icEdit from '@iconify/icons-ic/twotone-edit';
 import icDelete from '@iconify/icons-ic/twotone-delete';
 import icSearch from '@iconify/icons-ic/twotone-search';
@@ -27,12 +28,14 @@ import icPhone from '@iconify/icons-ic/twotone-phone';
 import icMail from '@iconify/icons-ic/twotone-mail';
 import icMap from '@iconify/icons-ic/twotone-map';
 
+import {Services} from '../../../Services/services'
+
 
 @UntilDestroy()
 @Component({
-  selector: 'vex-briefcase',
-  templateUrl: './briefcase.component.html',
-  styleUrls: ['./briefcase.component.scss'],
+  selector: 'vex-users',
+  templateUrl: './users.component.html',
+  styleUrls: ['./users.component.scss'],
   animations: [
     fadeInUp400ms,
     stagger40ms
@@ -46,7 +49,7 @@ import icMap from '@iconify/icons-ic/twotone-map';
     }
   ]
 })
-export class BriefcaseComponent implements OnInit, AfterViewInit {
+export class UserComponent implements OnInit, AfterViewInit {
 
   layoutCtrl = new FormControl('boxed');
 
@@ -54,30 +57,25 @@ export class BriefcaseComponent implements OnInit, AfterViewInit {
    * Simulating a service with HTTP that returns Observables
    * You probably want to remove this and do all requests in a service with HTTP
    */
-  subject$: ReplaySubject<Customer[]> = new ReplaySubject<Customer[]>(1);
-  data$: Observable<Customer[]> = this.subject$.asObservable();
-  customers: Customer[];
+  subject$: ReplaySubject<User[]> = new ReplaySubject<User[]>(1);
+  data$: Observable<User[]> = this.subject$.asObservable();
+  plans: User[];
+  UsersList:[];
 
   @Input()
-  columns: TableColumn<Customer>[] = [
+  columns: TableColumn<User>[] = [
     { label: 'Checkbox', property: 'checkbox', type: 'checkbox', visible: true },
-    { label: 'Image', property: 'image', type: 'image', visible: true },
-    { label: 'Name', property: 'name', type: 'text', visible: true, cssClasses: ['font-medium'] },
-    { label: 'First Name', property: 'firstName', type: 'text', visible: false },
-    { label: 'Last Name', property: 'lastName', type: 'text', visible: false },
-    { label: 'Contact', property: 'contact', type: 'button', visible: true },
-    { label: 'Address', property: 'address', type: 'text', visible: true, cssClasses: ['text-secondary', 'font-medium'] },
-    { label: 'Street', property: 'street', type: 'text', visible: false, cssClasses: ['text-secondary', 'font-medium'] },
-    { label: 'Zipcode', property: 'zipcode', type: 'text', visible: false, cssClasses: ['text-secondary', 'font-medium'] },
-    { label: 'City', property: 'city', type: 'text', visible: false, cssClasses: ['text-secondary', 'font-medium'] },
-    { label: 'Phone', property: 'phoneNumber', type: 'text', visible: true, cssClasses: ['text-secondary', 'font-medium'] },
-    { label: 'Labels', property: 'labels', type: 'button', visible: true },
+    { label: 'Nombre', property: 'name', type: 'text', visible: true },
+    { label: 'E-mail', property: 'email', type: 'text', visible: true },
+    { label: 'Contraseña', property: 'password', type: 'text', visible: true },
+    { label: 'Tipo', property: 'type', type: 'text', visible: true },
+    { label: 'Activo', property: 'active', type: 'text',visible: true, cssClasses: ['text-secondary', 'font-medium'] },
     { label: 'Actions', property: 'actions', type: 'button', visible: true }
   ];
   pageSize = 10;
   pageSizeOptions: number[] = [5, 10, 20, 50];
-  dataSource: MatTableDataSource<Customer> | null;
-  selection = new SelectionModel<Customer>(true, []);
+  dataSource: MatTableDataSource<User> | null;
+  selection = new SelectionModel<User>(true, []);
   searchCtrl = new FormControl();
 
   labels = aioTableLabels;
@@ -96,7 +94,7 @@ export class BriefcaseComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(private dialog: MatDialog) {
+  constructor(private dialog: MatDialog,  private Services: Services,) {
   }
 
   get visibleColumns() {
@@ -107,86 +105,124 @@ export class BriefcaseComponent implements OnInit, AfterViewInit {
    * Example on how to get data and pass it to the table - usually you would want a dedicated service with a HTTP request for this
    * We are simulating this request here.
    */
-  getData() {
-    return of(aioTableData.map(customer => new Customer(customer)));
+  getData(list) {
+    //console.log("-->",list)
+    return of(list.map(plan => plan));
+  }
+  getAdminList() {
+    this.Services.getAdminList()
+    .subscribe(
+        data => {
+          //console.log("Hola ", data)
+          if(data.success){
+            this.UsersList=data.data
+            
+            //return this.UsersList;
+            this.getData(this.UsersList).subscribe(plans => {
+              this.subject$.next(plans);
+            });
+            //this.dataSource = new MatTableDataSource();
+
+          this.data$.pipe(
+            filter<User[]>(Boolean)
+          ).subscribe(plans => {
+            //console.log(plans)
+            this.plans = plans;
+            this.dataSource.data = plans; //this.UsersList;
+          });
+          //console.log("-->",this.dataSource)
+          this.searchCtrl.valueChanges.pipe(
+            untilDestroyed(this)
+          ).subscribe(value => this.onFilterChange(value));
+            //this.ClientAddList=data.data
+            ////console.log("--",this.usersList)
+          }
+        },
+        error => {
+          //this.error=true
+        });
   }
 
   ngOnInit() {
-    this.getData().subscribe(customers => {
-      this.subject$.next(customers);
-    });
-
     this.dataSource = new MatTableDataSource();
-
-    this.data$.pipe(
-      filter<Customer[]>(Boolean)
-    ).subscribe(customers => {
-      this.customers = customers;
-      this.dataSource.data = customers;
-    });
-    //console.log("-->",this.dataSource)
-    this.searchCtrl.valueChanges.pipe(
-      untilDestroyed(this)
-    ).subscribe(value => this.onFilterChange(value));
+     //console.log("Activar ")
+    this.getAdminList();
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    //console.log("-->",this.dataSource)
   }
 
-  createCustomer() {
-    this.dialog.open(BriefcaseCreateUpdateComponent).afterClosed().subscribe((customer: Customer) => {
+  createAdmin() {
+    this.dialog.open(UserCreateUpdateComponent).afterClosed().subscribe((plan: User) => {
       /**
-       * Customer is the updated customer (if the user pressed Save - otherwise it's null)
+       * User is the updated plan (if the user pressed Save - otherwise it's null)
        */
-      if (customer) {
+      if (plan) {
         /**
          * Here we are updating our local array.
          * You would probably make an HTTP request here.
          */
-        this.customers.unshift(new Customer(customer));
-        this.subject$.next(this.customers);
+        this.plans.unshift(plan);
+        this.subject$.next(this.plans);
       }
     });
   }
 
-  updateCustomer(customer: Customer) {
-    this.dialog.open(BriefcaseCreateUpdateComponent, {
-      data: customer
-    }).afterClosed().subscribe(updatedCustomer => {
+  updateAdmin(plan: User) {
+    this.dialog.open(UserCreateUpdateComponent, {
+      data: plan
+    }).afterClosed().subscribe(updatedUser => {
       /**
-       * Customer is the updated customer (if the user pressed Save - otherwise it's null)
+       * User is the updated plan (if the user pressed Save - otherwise it's null)
        */
-      if (updatedCustomer) {
+      if (updatedUser) {
+        /**
+         * Here we are updating our local array.
+         * You would probably make an HTTP request here.
+        
+        const index = this.plans.findIndex((existingUser) => existingUser._id === updatedUser._id);
+        this.plans[index] = new User(updatedUser);
+        this.subject$.next(this.plans);*/
+        this.getAdminList();
+      }
+    });
+  }
+
+  deleteUser(plan: User) {
+    /**
+     * Here we are updating our local array.
+     * You would probably make an HTTP request here.
+     */
+
+    this.dialog.open(UserDeleteComponent, {
+      data: plan
+    }).afterClosed().subscribe(updatedUser => {
+      /**
+       * User is the updated plan (if the user pressed Save - otherwise it's null)
+       */
+      if (updatedUser) {
         /**
          * Here we are updating our local array.
          * You would probably make an HTTP request here.
          */
-        const index = this.customers.findIndex((existingCustomer) => existingCustomer.id === updatedCustomer.id);
-        this.customers[index] = new Customer(updatedCustomer);
-        this.subject$.next(this.customers);
+        this.plans.splice(this.plans.findIndex((existingUser) => existingUser._id === plan._id), 1);
+        this.selection.deselect(plan);
+        this.subject$.next(this.plans);
       }
     });
   }
 
-  deleteCustomer(customer: Customer) {
+  deleteUsers(plans: User[]) {
     /**
      * Here we are updating our local array.
      * You would probably make an HTTP request here.
      */
-    this.customers.splice(this.customers.findIndex((existingCustomer) => existingCustomer.id === customer.id), 1);
-    this.selection.deselect(customer);
-    this.subject$.next(this.customers);
+    plans.forEach(c => this.deleteUser(c));
   }
 
-  deleteCustomers(customers: Customer[]) {
-    /**
-     * Here we are updating our local array.
-     * You would probably make an HTTP request here.
-     */
-    customers.forEach(c => this.deleteCustomer(c));
-  }
 
   onFilterChange(value: string) {
     if (!this.dataSource) {
@@ -221,9 +257,9 @@ export class BriefcaseComponent implements OnInit, AfterViewInit {
     return column.property;
   }
 
-  onLabelChange(change: MatSelectChange, row: Customer) {
-    const index = this.customers.findIndex(c => c === row);
-    this.customers[index].labels = change.value;
-    this.subject$.next(this.customers);
+  onLabelChange(change: MatSelectChange, row: User) {
+    const index = this.plans.findIndex(c => c === row);
+    //this.plans[index].labels = change.value;
+    this.subject$.next(this.plans);
   }
 }

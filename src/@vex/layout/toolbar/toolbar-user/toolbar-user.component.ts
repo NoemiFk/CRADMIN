@@ -18,7 +18,7 @@ export class ToolbarUserComponent implements OnInit {
               private cd: ChangeDetectorRef) { }
 
   ngOnInit() {
-    console.log("---",this.admin)
+    //console.log("---",this.admin)
   }
 
   showPopover(originRef: HTMLElement) {
