@@ -69,7 +69,7 @@ export class UserComponent implements OnInit, AfterViewInit {
     { label: 'E-mail', property: 'email', type: 'text', visible: true },
     { label: 'Contraseña', property: 'password', type: 'text', visible: true },
     { label: 'Tipo', property: 'type', type: 'text', visible: true },
-    { label: 'Activo', property: 'active', type: 'text',visible: true, cssClasses: ['text-secondary', 'font-medium'] },
+    { label: 'Activo', property: 'active', type: 'boolean',visible: true, cssClasses: ['text-secondary', 'font-medium'] },
     { label: 'Actions', property: 'actions', type: 'button', visible: true }
   ];
   pageSize = 10;
@@ -261,5 +261,19 @@ export class UserComponent implements OnInit, AfterViewInit {
     const index = this.plans.findIndex(c => c === row);
     //this.plans[index].labels = change.value;
     this.subject$.next(this.plans);
+  }
+  changeStatus(status, id){
+    console.log("Estatus")
+     this.Services.statusAdmin(status,id)
+     .subscribe(
+         data => {
+           //console.log("Hola ", data)
+           if(data.success){
+            this.getAdminList()
+           }
+         },
+         error => {
+           //this.error=true
+         });
   }
 }

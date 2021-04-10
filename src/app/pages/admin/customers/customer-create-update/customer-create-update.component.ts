@@ -59,6 +59,9 @@ export class CustomerCreateUpdateComponent implements OnInit {
         "_id":customer._id,
       "name": customer.name,
       "nameAgency": customer.nameAgency,
+      "bussinesName": customer.bussinesName,
+      "status": customer.status,
+      "type": customer.type,
       "email": customer.email,
       "phone": customer.phone,
       "RFC": customer.RFC,
@@ -80,6 +83,8 @@ export class CustomerCreateUpdateComponent implements OnInit {
     this.form = this.fb.group({
       imageSrc: this.defaults.imageSrc,
       nameAgency: [this.defaults.nameAgency || ''],
+      bussinesName: [this.defaults.bussinesName || ''],
+      type: [this.defaults.type || ''],
       name: [this.defaults.name || ''],
       RFC: [this.defaults.RFC || ''],
       address1: this.defaults.address1 || '',
@@ -117,6 +122,9 @@ export class CustomerCreateUpdateComponent implements OnInit {
     let body= {
       "name": customer.name,
       "nameAgency": customer.nameAgency,
+      "bussinesName": customer.bussinesName,
+      "type": customer.type,
+      "status": customer.status,
       "email": customer.email,
       "phone": customer.phone,
       "RFC": customer.RFC,
@@ -160,6 +168,9 @@ export class CustomerCreateUpdateComponent implements OnInit {
     let body= {
       "name": customer.name,
       "nameAgency": customer.nameAgency,
+      "bussinesName": customer.bussinesName,
+      "type": customer.type,
+      "status": customer.status,
       "email": customer.email,
       "phone": customer.phone,
       "RFC": customer.RFC,

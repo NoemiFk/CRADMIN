@@ -102,8 +102,8 @@ const routes: VexRoutes = [
             loadChildren: () => import("./pages/admin/plans/plan.module").then(m => m.PlanModule),
           },
           {
-            path: 'analysis',
-            loadChildren: () => import('./pages/admin/analysis/analysis.module').then(m => m.AnalysisModule),
+            path: 'users',
+            loadChildren: () => import('./pages/admin/users/users.module').then(m => m.UserModule),
           },
           {
             path: 'segmentacion',

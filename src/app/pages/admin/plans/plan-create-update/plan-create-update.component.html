@@ -51,7 +51,7 @@
         <mat-label>Días de prueba</mat-label>
         <input formControlName="days" matInput>
 
-        <mat-icon [icIcon]="icEditLocation" class="mr-3" matPrefix></mat-icon>
+        <mat-icon [icIcon]="icClock" class="mr-3" matPrefix></mat-icon>
       </mat-form-field>
       <mat-form-field class="sm:ml-6 flex-auto">
           <mat-label>Prueba</mat-label>
@@ -94,12 +94,15 @@
       <mat-label>Beneficios</mat-label>
         
       <mat-select  matNativeControl name="type"  formControlName="Benefits" multiple>
-        <mat-option value="Crear portafolios">Crear portafolios</mat-option>
+        <mat-option value="Agregar_Clientes">Agregar Clientes</mat-option>
+        <mat-option value="Crear_Portafolios">Crear Portafolios</mat-option>
         <mat-option value="Mapeo">Mapeo</mat-option>
-        <mat-option value="Generar estrategias">Generar estrategias</mat-option>
-        <mat-option value="Generar e-mails">Generar e-mails</mat-option>
-        <mat-option value="Generar mensajes TXT">Generar mensajes TXT</mat-option>
-        <mat-option value="Generar segmentación">Generar segmentación</mat-option>
+        <mat-option value="Generar_Segmentación">Generar Segmentación</mat-option>
+        <mat-option value="Generar_Estrategias">Generar Estrategias</mat-option>
+        <mat-option value="Generar_Estrategias">Integracion Comunicacion Externa</mat-option>
+        <mat-option value="Generar_Estrategias">Integracion Comunicacion Interna</mat-option>
+        <mat-option value="Generar_e-mails">Envío masivo de e-mails</mat-option>
+        <mat-option value="Generar mensajes TXT">Envío masivo de txt</mat-option>
       </mat-select >
 
     <mat-icon [icIcon]="icEditLocation" class="mr-3" matPrefix></mat-icon>

@@ -15,7 +15,9 @@ import icEdit from '@iconify/icons-ic/twotone-edit';
 import icDelete from '@iconify/icons-ic/twotone-delete';
 import icSearch from '@iconify/icons-ic/twotone-search';
 import icAdd from '@iconify/icons-ic/twotone-add';
+import icAnaliys from '@iconify/icons-ic/graphic-eq';
 import icFilterList from '@iconify/icons-ic/twotone-filter-list';
+import icDownload from '@iconify/icons-ic/cloud-download';
 import { SelectionModel } from '@angular/cdk/collections';
 import icMoreHoriz from '@iconify/icons-ic/twotone-more-horiz';
 import icFolder from '@iconify/icons-ic/twotone-folder';
@@ -68,12 +70,15 @@ export class AioTableComponent implements OnInit, AfterViewInit {
   @Input()
   columns: TableColumn<Customer>[] = [
     { label: 'Checkbox', property: 'checkbox', type: 'checkbox', visible: true },
-    { label: 'Imagen', property: 'image', type: 'image', visible: true },
+    { label: 'Imagen', property: 'image', type: 'image', visible: false },
     { label: 'Agencia', property: 'nameAgency', type: 'text', visible: true, cssClasses: ['font-medium'] },
+    { label: 'Razón Social', property: 'bussinesName', type: 'text', visible: false, cssClasses: ['font-medium'] },
+    { label: 'Tipo', property: 'type', type: 'text', visible: false, cssClasses: ['font-medium'] },
     { label: 'RFC', property: 'RFC', type: 'text', visible: false, cssClasses: ['text-secondary', 'font-medium'] },
     { label: 'Nombre', property: 'name', type: 'text', visible: true },
     { label: 'Telefono', property: 'phone', type: 'text', visible: true },
     { label: 'E-mail', property: 'email', type: 'text', visible: true },
+    { label: 'Estatus', property: 'status', type: 'boolean', visible: true },
     { label: 'Calle', property: 'address1', type: 'object', object:'address',visible: false, cssClasses: ['text-secondary', 'font-medium'] },
     { label: 'No. Int', property: 'int', type: 'object', object:'address', visible: false },
     { label: 'No. Ext', property: 'ext', type: 'object', object:'address', visible: false },
@@ -103,8 +108,10 @@ export class AioTableComponent implements OnInit, AfterViewInit {
   icSearch = icSearch;
   icDelete = icDelete;
   icAdd = icAdd;
+  icAnaliys=icAnaliys;
   icFilterList = icFilterList;
   icMoreHoriz = icMoreHoriz;
+  icDownload=icDownload;
   icFolder = icFolder;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -276,6 +283,20 @@ export class AioTableComponent implements OnInit, AfterViewInit {
     column.visible = !column.visible;
   }
 
+  changeStatus(status, id){
+    console.log("Estatus")
+     this.Services.statusAgency(status,id)
+     .subscribe(
+         data => {
+           //console.log("Hola ", data)
+           if(data.success){
+            this.getAgenciesList();
+           }
+         },
+         error => {
+           //this.error=true
+         });
+  }
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
     const numSelected = this.selection.selected.length;
@@ -298,5 +319,60 @@ export class AioTableComponent implements OnInit, AfterViewInit {
     const index = this.customers.findIndex(c => c === row);
     //this.customers[index].labels = change.value;
     this.subject$.next(this.customers);
+  }
+
+   setFoliosToExcel() {
+    let data = this.AgenciesList;
+    this.exportCSVFile(data,"Collection Robot Clientes");
+  }
+  
+   exportCSVFile(items, fileName) {
+    let jsonObject = JSON.stringify(items);
+    let csv = this.convertToCSV(jsonObject);
+    let exportName = fileName + '.csv' || 'export.csv';
+    let blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    if (navigator.msSaveBlob) {
+      navigator.msSaveBlob(blob, exportName);
+    } else {
+      let link = document.createElement('a');
+      if (link.download !== undefined) {
+        let url = URL.createObjectURL(blob);
+        link.setAttribute('href', url);
+        link.setAttribute('download', exportName);
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+    }
+  }
+
+   convertToCSV(objArray) {
+     let array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+   let  str = "";
+    for (var i = 0; i < array.length; i++) {
+      var row = "";
+      console.log("--",array[i])
+      //2nd loop will extract each column and convert it in string comma-seprated
+      for (var index in array[i]) {
+       
+        if( typeof array[i][index] != 'object'){
+          console.log("**",array[i][index] )
+          row += '"' + array[i][index] + '",';
+        }
+        else{
+          console.log("******",array[i][index] )
+          let array2 = array[i][index];
+            for (var index in array2) {
+              console.log("*",array2[index] )
+                row += '"' + array2[index] + '",';
+            }
+          }
+      }
+      row.slice(0, row.length - 1);
+      //add a line break after each row
+      str += row + '\r\n';
+  }
+    return str;
   }
 }

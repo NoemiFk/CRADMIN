@@ -4,11 +4,13 @@ import { Settings } from 'luxon';
 import { DOCUMENT } from '@angular/common';
 import { Platform } from '@angular/cdk/platform';
 import { NavigationService } from '../@vex/services/navigation.service';
+
 import icLayers from '@iconify/icons-ic/twotone-layers';
 import icAssigment from '@iconify/icons-ic/twotone-assignment';
 import icContactSupport from '@iconify/icons-ic/twotone-contact-support';
 import icPerson from '@iconify/icons-ic/person';
 import icPortafolio from '@iconify/icons-ic/twotone-folder';
+import icAgencies from '@iconify/icons-ic/business-center';
 import icAnalisis from '@iconify/icons-ic/graphic-eq';
 import icSegmentacion from '@iconify/icons-ic/twotone-pause-circle-outline';
 import icDateRange from '@iconify/icons-ic/twotone-date-range';
@@ -110,33 +112,33 @@ export class AppComponent {
         type: 'link',
         label: 'Dashboard',
         route: '/',
-        icon: icLayers,
+        icon: icAnalisis,
         routerLinkActiveOptions: { exact: true }
       },
       /////////////////////
       {
         type: 'subheading',
-        label: 'Clientes',
+        label: 'General',
         children: [
           {
             type: 'link',
             label: 'Agencias',
             route: '/admin/customers',
-            icon: icPerson
+            icon: icAgencies
           },
           {
             type: 'link',
             label: 'Planes',
             route: '/admin/plans',
-            icon: icPortafolio
+            icon: icLayers
           },
           {
             type: 'link',
-            label: 'Analisis',
-            route: '/admin/analysis',
-            icon: icAnalisis
+            label: 'Usuarios',
+            route: '/admin/users',
+            icon: icPerson
           },
-          {
+        /*  {
             type: 'link',
             label: 'Segmentación',
             route: '/admin/segmentacion',
@@ -147,11 +149,11 @@ export class AppComponent {
             label: 'Estrategias',
             route: '/admin/strategy',
             icon: icAssigment
-          },
+          },*/
         ]
       },
       ///////////////////////
-
+/*
       {
         type: 'subheading',
         label: 'Apps',
@@ -271,7 +273,7 @@ export class AppComponent {
           },
         ]
       },
- /*     {
+      {
         type: 'subheading',
         label: 'Pages',
         children: [

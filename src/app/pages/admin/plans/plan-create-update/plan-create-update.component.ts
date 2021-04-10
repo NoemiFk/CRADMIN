@@ -4,6 +4,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Plan } from '../interfaces/plan.model';
 import icMoreVert from '@iconify/icons-ic/twotone-more-vert';
 import icClose from '@iconify/icons-ic/twotone-close';
+import icClock from '@iconify/icons-ic/timer';
 import icPrint from '@iconify/icons-ic/twotone-print';
 import icDownload from '@iconify/icons-ic/twotone-cloud-download';
 import icDelete from '@iconify/icons-ic/twotone-delete';
@@ -30,7 +31,7 @@ export class PlanCreateUpdateComponent implements OnInit {
 
   icMoreVert = icMoreVert;
   icClose = icClose;
-
+  icClock=icClock;
   icPrint = icPrint;
   icDownload = icDownload;
   icDelete = icDelete;

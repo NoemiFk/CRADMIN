@@ -1,6 +1,6 @@
 <vex-page-layout>
 
-  <vex-page-layout-header class="pb-16" fxLayout="column" fxLayoutAlign="center start">
+  <vex-page-layout-header  fxLayout="column" fxLayoutAlign="center start">
     <div [class.container]="layoutCtrl.value === 'boxed'"
          [class.px-gutter]="layoutCtrl.value === 'fullwidth'"
          class="w-full flex flex-col sm:flex-row justify-between">
@@ -119,6 +119,28 @@
             <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>{{ row[column.property] }}</td>
           </ng-container>
         </ng-container>
+
+           <!-- Boolean Columns -->
+           <ng-container *ngFor="let column of columns; trackBy: trackByProperty">
+            <ng-container *ngIf="column.type === 'boolean'" [matColumnDef]="column.property">
+              <th *matHeaderCellDef class="uppercase" mat-header-cell mat-sort-header> {{ column.label }}</th>
+              <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>
+                <div class="flex">
+                  <a (click)="$event.stopPropagation(); changeStatus(false,row._id)"  *ngIf="row[column.property]==true" 
+                    class="w-8 h-8 leading-none flex items-center justify-center ml-1 hover:bg-hover text-green bg-green-light"
+                    mat-stroked-button>
+                    {{ row[column.property]==true?"Activo":"Inactivo"}}
+                  </a>
+                  <a (click)="$event.stopPropagation(); changeStatus(true,row._id)"  *ngIf="row[column.property]==false" 
+                    class="w-8 h-8 leading-none flex items-center justify-center ml-1 hover:bg-hover text-red bg-red-light"
+                    mat-stroked-button>
+                    {{ row[column.property]==true?"Activo":"Inactivo"}}
+                  </a>
+                </div>
+               
+              </td>
+            </ng-container>
+          </ng-container>
 
          <!-- Text Columns Objects-->
          <ng-container *ngFor="let column of columns; trackBy: trackByProperty">

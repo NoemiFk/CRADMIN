@@ -225,7 +225,20 @@ export class PlanComponent implements OnInit, AfterViewInit {
     plans.forEach(c => this.deletePlan(c));
   }
 
-
+  changeStatus(status, id){
+    console.log("Estatus")
+     this.Services.statusPlan(status,id)
+     .subscribe(
+         data => {
+           //console.log("Hola ", data)
+           if(data.success){
+            this.getPlansList();
+           }
+         },
+         error => {
+           //this.error=true
+         });
+  }
   onFilterChange(value: string) {
     if (!this.dataSource) {
       return;

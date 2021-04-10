@@ -8,7 +8,8 @@ import icPrint from '@iconify/icons-ic/twotone-print';
 import icDownload from '@iconify/icons-ic/twotone-cloud-download';
 import icDelete from '@iconify/icons-ic/twotone-delete';
 import icPhone from '@iconify/icons-ic/twotone-phone';
-import icPerson from '@iconify/icons-ic/twotone-person';
+import icPerson from '@iconify/icons-ic/twotone-phone';
+import icClock from '@iconify/icons-ic/timer';
 import icMyLocation from '@iconify/icons-ic/twotone-my-location';
 import icLocationCity from '@iconify/icons-ic/twotone-location-city';
 import icEditLocation from '@iconify/icons-ic/twotone-edit-location';
@@ -36,6 +37,7 @@ export class UserCreateUpdateComponent implements OnInit {
   icDelete = icDelete;
 
   icPerson = icPerson;
+  icClock=icClock;
   icMyLocation = icMyLocation;
   icLocationCity = icLocationCity;
   icEditLocation = icEditLocation;
@@ -58,13 +60,8 @@ export class UserCreateUpdateComponent implements OnInit {
       this.defaults= {
         "_id":user._id,
       "name": user.name,
-      "storage": user.storage,
-      "payment": user.payment,
-      "active": user.active,
-      "contract": user.contract,
-      "activeTest": user.trialPeriod.active,
-      "days": user.trialPeriod.days,
-      "Benefits":user.Benefits
+      "email": user.email,
+      "type": user.type,
       
       }
       //console.log(this.defaults)
@@ -72,14 +69,9 @@ export class UserCreateUpdateComponent implements OnInit {
       this.defaults = {} as User;
     }
     this.form = this.fb.group({
-      storage: [this.defaults.storage || 8],
       name: [this.defaults.name || ''],
-      payment: [this.defaults.payment || 0],
-      active: this.defaults.active || true,
-      contract: this.defaults.contract || 'Mensual',
-      Benefits: this.defaults.Benefits || '',
-      activeTest: this.defaults.activeTest || true,
-      days: this.defaults.days || 10, 
+      email: [this.defaults.email || ''],
+      type: this.defaults.type || '',
       
     });
   }
@@ -101,23 +93,15 @@ export class UserCreateUpdateComponent implements OnInit {
 
     let body= {
       "name": user.name,
-      "storage": user.storage,
-      "payment": user.payment,
-      "contract": user.contract,
-      "days": user.days,
-      "active": user.active,
-      "trialPeriod": {
-        "days": user.date,
-        "active": user.activeTest
-      },
-      "Benefits":user.Benefits
+      "email": user.email,
+      "type": user.type
     }
      //console.log("--->",body)
-      this.createAgency(body);
+      this.createAdmin(body);
   }
 
-  createAgency(body) {
-    this.Services.createAgency(body)
+  createAdmin(body) {
+    this.Services.createAdmin(body)
     .subscribe(
         data => {
           //console.log("Hola ", data)
@@ -136,31 +120,15 @@ export class UserCreateUpdateComponent implements OnInit {
     user.id = this.defaults.id;
     let body= {
       "name": user.name,
-      "nameAgency": user.nameAgency,
       "email": user.email,
-      "phone": user.phone,
-      "RFC": user.RFC,
-      "address": {
-        "city": user.city,
-        "state": user.state,
-        "municipality": user.municipality,
-        "address1": user.address1,
-        "address2": user.address2,
-        "int": user.int,
-        "ext": user.ext,
-        "zipcode": user.zipcode
-      },
-      "contract": {
-        "date": user.date,
-        "user_id": user.user_id
-      }
+      "type": user.type,
     }
-    this.updateAgency(body)
+    this.updateAdmin(body)
     
   }
-  updateAgency(body) {
+  updateAdmin(body) {
     let user_id = this.defaults._id;
-    this.Services.updateAgency( user_id, body)
+    this.Services.updateAdmin( user_id, body)
     .subscribe(
         data => {
           //console.log("Hola ", data)

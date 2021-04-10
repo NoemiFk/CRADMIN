@@ -61,7 +61,19 @@
        <!-- Name Column -->
        <ng-container matColumnDef="Password">
         <th mat-header-cell *matHeaderCellDef> Password </th>
-        <td mat-cell *matCellDef="let element"> {{element.password}} </td>
+        <td mat-cell *matCellDef="let element;  let i = index;"> 
+
+          <label *ngIf="element.showPass">{{element.password}} </label>
+          <label *ngIf="!element.showPass">********* </label>
+
+          <button (click)="showPass(i)"
+          color="accent"
+          mat-icon-button
+          matTooltip="Mostrar Contraseña"
+          type="button">
+          <mat-icon [icIcon]="icEye"></mat-icon>
+          </button>
+        </td>
       </ng-container>
     
       <!-- Weight Column -->

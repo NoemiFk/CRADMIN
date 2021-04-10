@@ -2,10 +2,10 @@
   <div fxLayout="row" fxLayoutAlign="start center" mat-dialog-title>
     <h2 *ngIf="form.get('name').value || form.get('name').value"
         class="headline m-0"
-        fxFlex="auto">Nuevo Plan - {{form.get('name').value }}</h2>
+        fxFlex="auto"> {{form.get('name').value }}</h2>
     <h2 *ngIf="!form.get('name').value && !form.get('name').value"
         class="headline m-0"
-        fxFlex="auto">Nuevo Plan</h2>
+        fxFlex="auto">Nuevo Usuario</h2>
 
     <button [matMenuTriggerFor]="settingsMenu" class="text-secondary" mat-icon-button type="button">
       <mat-icon [icIcon]="icMoreVert"></mat-icon>
@@ -20,101 +20,42 @@
 
   <mat-dialog-content fxLayout="column">
       
-     
+  
       
     <div class="flex flex-col sm:flex-row">
       <mat-form-field class="mt-6 flex-auto">
-        <mat-label>Nombre de plan </mat-label>
+        <mat-label>Nombre</mat-label>
         <input formControlName="name" matInput>
   
         <mat-icon [icIcon]="icLocationCity" class="mr-3" matPrefix></mat-icon>
       </mat-form-field>
     </div>
     <div class="flex flex-col sm:flex-row">
-      
-      <mat-form-field class="flex-auto">
-        <mat-label>Almacenamiento (GB)</mat-label>
-        <input cdkFocusInitial formControlName="storage" matInput>
-
-        <mat-icon [icIcon]="icPerson" class="mr-3" matPrefix></mat-icon>
-      </mat-form-field>
-
-      <mat-form-field class="sm:ml-6 flex-auto">
-        <mat-label>Precio</mat-label>
-        <input cdkFocusInitial formControlName="payment" matInput>
-
-        <mat-icon [icIcon]="icPerson" class="mr-3" matPrefix></mat-icon>
+      <mat-form-field class="mt-6 flex-auto">
+        <mat-label>E-mail</mat-label>
+        <input formControlName="email" matInput>
+  
+        <mat-icon [icIcon]="icLocationCity" class="mr-3" matPrefix></mat-icon>
       </mat-form-field>
     </div>
     <div class="flex flex-col sm:flex-row">
-      <mat-form-field class="flex-auto">
-        <mat-label>Días de prueba</mat-label>
-        <input formControlName="days" matInput>
-
-        <mat-icon [icIcon]="icEditLocation" class="mr-3" matPrefix></mat-icon>
-      </mat-form-field>
-      <mat-form-field class="sm:ml-6 flex-auto">
-          <mat-label>Prueba</mat-label>
-          
-          <mat-select matNativeControl name="type"  formControlName="activeTest">
-            <mat-option value="no">Seleccione uno...</mat-option>
-            <mat-option value=true>Activo</mat-option>
-            <mat-option value=false>Inactivo</mat-option>
-          </mat-select>
-
-        <mat-icon [icIcon]="icEditLocation" class="mr-3" matPrefix></mat-icon>
+      <mat-form-field class="  mt-6 flex-auto">
+        <mat-label>Rol</mat-label>
+            <mat-select matNativeControl name="type"  formControlName="type">
+              <mat-option value="Administrador">Super Administrador</mat-option>
+            <mat-option value="Gerente">Administrador</mat-option>
+            </mat-select>
+        <mat-icon [icIcon]="icDollar" class="mr-3" matPrefix></mat-icon>
       </mat-form-field>
     </div>
    
-    <div class="flex flex-col sm:flex-row">
-      <mat-form-field class=" flex-auto">
-        <mat-label>tipo de contrato</mat-label>
-        
-        <mat-select  matNativeControl name="type"  formControlName="contract">
-          <mat-option value="Mensual">Mensual</mat-option>
-          <mat-option value="Bimestral">Bimestral</mat-option>
-          <mat-option value="Semestral">Semestral</mat-option>
-          <mat-option value="Anual">Anual</mat-option>
-        </mat-select >
-
-        <mat-icon [icIcon]="icEditLocation" class="mr-3" matPrefix></mat-icon>
-      </mat-form-field>
-      <mat-form-field class="sm:ml-6 flex-auto">
-        <mat-label>Activar plan</mat-label>
-        
-        <mat-select  matNativeControl name="type"  formControlName="active" >
-          <mat-option value=true>Activo</mat-option>
-          <mat-option value=false>Inactivo</mat-option>
-        </mat-select >
-
-      <mat-icon [icIcon]="icEditLocation" class="mr-3" matPrefix></mat-icon>
-    </mat-form-field>
-    </div>
-    <mat-form-field class="flex-auto" >
-      <mat-label>Beneficios</mat-label>
-        
-      <mat-select  matNativeControl name="type"  formControlName="Benefits" multiple>
-        <mat-option value="Crear portafolios">Crear portafolios</mat-option>
-        <mat-option value="Mapeo">Mapeo</mat-option>
-        <mat-option value="Generar estrategias">Generar estrategias</mat-option>
-        <mat-option value="Generar e-mails">Generar e-mails</mat-option>
-        <mat-option value="Generar mensajes TXT">Generar mensajes TXT</mat-option>
-        <mat-option value="Generar segmentación">Generar segmentación</mat-option>
-      </mat-select >
-
-    <mat-icon [icIcon]="icEditLocation" class="mr-3" matPrefix></mat-icon>
-    </mat-form-field>
-
-    
-   
-    
     
   </mat-dialog-content>
 
   <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close type="button">CANCELAR</button>
-    <button *ngIf="isCreateMode()" color="primary" mat-button type="submit">AGREGAR AGENCIA</button>
-    <button *ngIf="isUpdateMode()" color="primary" mat-button type="submit">EDITAR AGENCIA</button>
+    <button *ngIf="isCreateMode()" color="primary" mat-button type="submit">AGREGAR USUARIO</button>
+    <button *ngIf="isUpdateMode()" color="primary" mat-button type="submit">EDITAR USUARIO</button>
   </mat-dialog-actions>
 </form>
 

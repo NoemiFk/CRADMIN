@@ -4,10 +4,10 @@
 
     <h2 *ngIf="form.get('nameAgency').value || form.get('name').value"
         class="headline m-0"
-        fxFlex="auto">{{ form.get('nameAgency').value + ' - ' + form.get('name').value }}</h2>
+        fxFlex="auto">{{ form.get('nameAgency').value }}</h2>
     <h2 *ngIf="!form.get('nameAgency').value && !form.get('name').value"
         class="headline m-0"
-        fxFlex="auto">Nueva Agencia</h2>
+        fxFlex="auto">Alta de Cliente</h2>
 
     <button [matMenuTriggerFor]="settingsMenu" class="text-secondary" mat-icon-button type="button">
       <mat-icon [icIcon]="icMoreVert"></mat-icon>
@@ -26,24 +26,44 @@
       
     <div class="flex flex-col sm:flex-row">
       <mat-form-field class="mt-6 flex-auto">
-        <mat-label>Nombre de agencia</mat-label>
+        <mat-label>Nombre de Cliente</mat-label>
         <input formControlName="nameAgency" matInput>
   
         <mat-icon [icIcon]="icLocationCity" class="mr-3" matPrefix></mat-icon>
       </mat-form-field>
     </div>
     <div class="flex flex-col sm:flex-row">
-      
       <mat-form-field class="flex-auto">
         <mat-label>Nombre de Contacto de Agencia</mat-label>
         <input cdkFocusInitial formControlName="name" matInput>
 
         <mat-icon [icIcon]="icPerson" class="mr-3" matPrefix></mat-icon>
       </mat-form-field>
+    </div>
+    <div class="flex flex-col sm:flex-row">
+      <mat-form-field class="flex-auto">
+        <mat-label>Razón Social</mat-label>
+        <input cdkFocusInitial formControlName="bussinesName" matInput>
 
-      <mat-form-field class="sm:ml-6 flex-auto">
+        <mat-icon [icIcon]="icPerson" class="mr-3" matPrefix></mat-icon>
+      </mat-form-field>
+    </div>
+    <div class="flex flex-col sm:flex-row">
+
+      <mat-form-field class="flex-auto">
         <mat-label>RFC</mat-label>
         <input cdkFocusInitial formControlName="RFC" matInput>
+
+        <mat-icon [icIcon]="icPerson" class="mr-3" matPrefix></mat-icon>
+      </mat-form-field>
+
+      <mat-form-field class="sm:ml-6 flex-auto">
+        <mat-label>Tipo de cliente</mat-label>
+        <mat-select matNativeControl name="typeClient"  formControlName="type">
+          <mat-option value="Ninguno">Seleccione uno...</mat-option>
+          <mat-option value="Agencia de cobranza">Agencia de cobranza</mat-option>
+          <mat-option value="Financiera">Financiera</mat-option>
+        </mat-select>
 
         <mat-icon [icIcon]="icPerson" class="mr-3" matPrefix></mat-icon>
       </mat-form-field>
@@ -168,7 +188,11 @@
       <mat-form-field class="sm:ml-6 flex-auto">
         <mat-label>Plan</mat-label>
             <mat-select matNativeControl name="client_id"  formControlName="plan_id">
-              <mat-option [value]="option._id" *ngFor="let option of PlansList;">{{option.name}}</mat-option>
+              <ng-container *ngFor="let option of PlansList;">
+                <mat-option *ngIf="option.active" [value]="option._id">
+                  {{option.name}}
+                </mat-option>
+              </ng-container>
             </mat-select>
         <mat-icon [icIcon]="icDollar" class="mr-3" matPrefix></mat-icon>
       </mat-form-field>

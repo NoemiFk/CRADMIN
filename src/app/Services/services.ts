@@ -54,6 +54,13 @@ export class Services {
               return resp;
           });
     }
+    statusAgency(status:boolean, id:string) {
+        return this.http.put<any>(URL+'/agency/'+status+'/'+id,httpOptions)
+            .map(resp => {
+                console.log("statusAgency",resp)
+                return resp;
+            });
+      }
 
     ///
     getPlansList() {
@@ -89,6 +96,13 @@ export class Services {
               return resp;
           });
     }
+    statusPlan(status:boolean, id:string) {
+        return this.http.put<any>(URL+'/plan/'+status+'/'+id,httpOptions)
+            .map(resp => {
+                console.log("statusAgency",resp)
+                return resp;
+            });
+      }
 
     // Users
     getUsersList(id:string) {
@@ -117,7 +131,7 @@ export class Services {
     }
     // Users
     getAdminList() {
-      return this.http.get<any>(URL+'/admins')
+      return this.http.get<any>(URL+'/admin')
           .map(resp => {
            
               //console.log("getUsersList",resp)
@@ -140,4 +154,20 @@ export class Services {
               return resp;
           });
     }
+    updateAdmin(id:string,body:object) {
+        return this.http.put<any>(URL+'/admin/'+id,body,httpOptions)
+        .map(resp => {
+            
+            //console.log("updatePlan",resp)
+            return resp;
+
+        });
+      }
+      statusAdmin(status:boolean, id:string) {
+        return this.http.put<any>(URL+'/admin/'+status+'/'+id,httpOptions)
+            .map(resp => {
+                console.log("statusAgency",resp)
+                return resp;
+            });
+      }
 }

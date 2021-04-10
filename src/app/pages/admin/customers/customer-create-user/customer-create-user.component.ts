@@ -8,6 +8,7 @@ import icClose from '@iconify/icons-ic/twotone-close';
 import icPrint from '@iconify/icons-ic/twotone-print';
 import icDownload from '@iconify/icons-ic/twotone-cloud-download';
 import icDelete from '@iconify/icons-ic/twotone-delete';
+import icEye from '@iconify/icons-ic/visibility';
 import icPhone from '@iconify/icons-ic/twotone-phone';
 import icPerson from '@iconify/icons-ic/twotone-person';
 import icMyLocation from '@iconify/icons-ic/twotone-my-location';
@@ -38,6 +39,7 @@ export class CustomerUsersComponent implements OnInit {
   icPrint = icPrint;
   icDownload = icDownload;
   icDelete = icDelete;
+  icEye=icEye;
 
   icPerson = icPerson;
   icMyLocation = icMyLocation;
@@ -116,6 +118,9 @@ export class CustomerUsersComponent implements OnInit {
         });
   }
 
+  showPass(index){
+    this.dataSource[index].showPass=!this.dataSource[index].showPass
+  }
   deleteUser(id){
     
     this.Services.deleteUser(id)
