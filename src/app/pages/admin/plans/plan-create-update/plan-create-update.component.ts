@@ -10,11 +10,14 @@ import icDownload from '@iconify/icons-ic/twotone-cloud-download';
 import icDelete from '@iconify/icons-ic/twotone-delete';
 import icPhone from '@iconify/icons-ic/twotone-phone';
 import icPerson from '@iconify/icons-ic/twotone-person';
+import icHost from '@iconify/icons-ic/round-horizontal-split';
 import icMyLocation from '@iconify/icons-ic/twotone-my-location';
 import icLocationCity from '@iconify/icons-ic/twotone-location-city';
 import icEditLocation from '@iconify/icons-ic/twotone-edit-location';
 import icDollar from '@iconify/icons-ic/outline-money';
 import {Services} from '../../../../Services/services'
+import baselinePriceChange from '@iconify-icons/ic/baseline-price-change';
+
 
 @Component({
   selector: 'vex-plan-create-update',
@@ -42,6 +45,7 @@ export class PlanCreateUpdateComponent implements OnInit {
   icEditLocation = icEditLocation;
   icDollar = icDollar;
   icPhone = icPhone;
+  icHost = icHost;
 
   constructor(@Inject(MAT_DIALOG_DATA) public defaults: any,
               private dialogRef: MatDialogRef<PlanCreateUpdateComponent>,

@@ -22,18 +22,18 @@ export class DashboardAnalyticsComponent implements OnInit {
       type: 'badge'
     },
     {
-      label: 'PRODUCT',
+      label: 'AGENCIA',
       property: 'name',
       type: 'text'
     },
     {
-      label: '$ PRICE',
+      label: 'FACTURA',
       property: 'price',
       type: 'text',
       cssClasses: ['font-medium']
     },
     {
-      label: 'DATE',
+      label: 'FECHA',
       property: 'timestamp',
       type: 'text',
       cssClasses: ['text-secondary']
@@ -48,12 +48,12 @@ export class DashboardAnalyticsComponent implements OnInit {
 
   userSessionsSeries: ApexAxisChartSeries = [
     {
-      name: 'Users',
-      data: [10, 50, 26, 50, 38, 60, 50, 25, 61, 80, 40, 60]
+      name: 'Activos',
+      data: [10, 11, 14, 14, 15, 13, 13, 16, 16, 18, 19, 15, 19, 19, 22]
     },
     {
-      name: 'Sessions',
-      data: [5, 21, 42, 70, 41, 20, 35, 50, 10, 15, 30, 50]
+      name: 'Inactivos',
+      data: [1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 4, 2, 2, 4]
     },
   ];
 

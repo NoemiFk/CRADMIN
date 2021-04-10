@@ -7,9 +7,9 @@
         class="headline m-0"
         fxFlex="auto">Nuevo Usuario</h2>
 
-    <button [matMenuTriggerFor]="settingsMenu" class="text-secondary" mat-icon-button type="button">
+    <!--<button [matMenuTriggerFor]="settingsMenu" class="text-secondary" mat-icon-button type="button">
       <mat-icon [icIcon]="icMoreVert"></mat-icon>
-    </button>
+    </button>-->
 
     <button class="text-secondary" mat-dialog-close mat-icon-button type="button">
       <mat-icon [icIcon]="icClose"></mat-icon>
@@ -27,7 +27,7 @@
         <mat-label>Nombre</mat-label>
         <input formControlName="name" matInput>
   
-        <mat-icon [icIcon]="icLocationCity" class="mr-3" matPrefix></mat-icon>
+        <mat-icon aria-hidden="false" aria-label="Example home icon"  class="mr-3" matPrefix>person</mat-icon>
       </mat-form-field>
     </div>
     <div class="flex flex-col sm:flex-row">
@@ -35,7 +35,7 @@
         <mat-label>E-mail</mat-label>
         <input formControlName="email" matInput>
   
-        <mat-icon [icIcon]="icLocationCity" class="mr-3" matPrefix></mat-icon>
+        <mat-icon aria-hidden="false" aria-label="Example home icon"  class="mr-3" matPrefix>email</mat-icon>
       </mat-form-field>
     </div>
     <div class="flex flex-col sm:flex-row">
@@ -45,7 +45,7 @@
               <mat-option value="Administrador">Super Administrador</mat-option>
             <mat-option value="Gerente">Administrador</mat-option>
             </mat-select>
-        <mat-icon [icIcon]="icDollar" class="mr-3" matPrefix></mat-icon>
+            <mat-icon aria-hidden="false" aria-label="Example home icon"  class="mr-3" matPrefix>supervisor_account</mat-icon>
       </mat-form-field>
     </div>
    
@@ -58,7 +58,7 @@
     <button *ngIf="isUpdateMode()" color="primary" mat-button type="submit">EDITAR USUARIO</button>
   </mat-dialog-actions>
 </form>
-
+<!--
 <mat-menu #settingsMenu="matMenu" xPosition="before" yPosition="below">
   <button mat-menu-item>
     <mat-icon [icIcon]="icPrint"></mat-icon>
@@ -75,3 +75,4 @@
     <span>Delete</span>
   </button>
 </mat-menu>
+-->

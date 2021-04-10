@@ -41,7 +41,7 @@ export class WidgetLargeChartComponent implements OnInit {
       }
     },
     colors: ['#008ffb', '#ff9800'],
-    labels: createDateArray(12),
+    labels: createDateArray(15),
     xaxis: {
       type: 'datetime',
       labels: {

@@ -7,9 +7,9 @@
         class="headline m-0"
         fxFlex="auto">Nuevo Plan</h2>
 
-    <button [matMenuTriggerFor]="settingsMenu" class="text-secondary" mat-icon-button type="button">
+    <!--button [matMenuTriggerFor]="settingsMenu" class="text-secondary" mat-icon-button type="button">
       <mat-icon [icIcon]="icMoreVert"></mat-icon>
-    </button>
+    </button-->
 
     <button class="text-secondary" mat-dialog-close mat-icon-button type="button">
       <mat-icon [icIcon]="icClose"></mat-icon>
@@ -27,7 +27,7 @@
         <mat-label>Nombre de plan </mat-label>
         <input formControlName="name" matInput>
   
-        <mat-icon [icIcon]="icLocationCity" class="mr-3" matPrefix></mat-icon>
+        <mat-icon aria-hidden="false" aria-label="Example home icon"  class="mr-3" matPrefix>drive_file_rename_outline</mat-icon>
       </mat-form-field>
     </div>
     <div class="flex flex-col sm:flex-row">
@@ -36,14 +36,14 @@
         <mat-label>Almacenamiento (GB)</mat-label>
         <input cdkFocusInitial formControlName="storage" matInput>
 
-        <mat-icon [icIcon]="icPerson" class="mr-3" matPrefix></mat-icon>
+        <mat-icon [icIcon]="icHost" class="mr-3" matPrefix></mat-icon>
       </mat-form-field>
 
       <mat-form-field class="sm:ml-6 flex-auto">
         <mat-label>Precio</mat-label>
         <input cdkFocusInitial formControlName="payment" matInput>
 
-        <mat-icon [icIcon]="icPerson" class="mr-3" matPrefix></mat-icon>
+        <mat-icon aria-hidden="false" aria-label="Example home icon"  class="mr-3" matPrefix>payments</mat-icon>
       </mat-form-field>
     </div>
     <div class="flex flex-col sm:flex-row">
@@ -77,7 +77,7 @@
           <mat-option value="Anual">Anual</mat-option>
         </mat-select >
 
-        <mat-icon [icIcon]="icEditLocation" class="mr-3" matPrefix></mat-icon>
+        <mat-icon aria-hidden="false" aria-label="Example home icon"  class="mr-3" matPrefix>gavel</mat-icon>
       </mat-form-field>
       <mat-form-field class="sm:ml-6 flex-auto">
         <mat-label>Activar plan</mat-label>
@@ -87,7 +87,7 @@
           <mat-option [value]=false>Inactivo</mat-option>
         </mat-select >
 
-      <mat-icon [icIcon]="icEditLocation" class="mr-3" matPrefix></mat-icon>
+        <mat-icon aria-hidden="false" aria-label="Example home icon"  class="mr-3" matPrefix>verified_user</mat-icon>
     </mat-form-field>
     </div>
     <mat-form-field class="flex-auto" >
@@ -105,7 +105,7 @@
         <mat-option value="Generar mensajes TXT">Envío masivo de txt</mat-option>
       </mat-select >
 
-    <mat-icon [icIcon]="icEditLocation" class="mr-3" matPrefix></mat-icon>
+      <mat-icon aria-hidden="false" aria-label="Example home icon"  class="mr-3" matPrefix>grading</mat-icon>
     </mat-form-field>
 
     
@@ -121,7 +121,7 @@
   </mat-dialog-actions>
 </form>
 
-<mat-menu #settingsMenu="matMenu" xPosition="before" yPosition="below">
+<!--mat-menu #settingsMenu="matMenu" xPosition="before" yPosition="below">
   <button mat-menu-item>
     <mat-icon [icIcon]="icPrint"></mat-icon>
     <span>Print</span>
@@ -136,4 +136,4 @@
     <mat-icon [icIcon]="icDelete"></mat-icon>
     <span>Delete</span>
   </button>
-</mat-menu>
+</mat-menu-->
