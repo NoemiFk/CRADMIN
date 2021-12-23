@@ -98,6 +98,10 @@ const routes: VexRoutes = [
             loadChildren: () => import('./pages/admin/customers/aio-table.module').then(m => m.AioTableModule),
           },
           {
+            path: 'invoice/:id',
+            loadChildren: () => import('./pages/admin/invoice/invoice.module').then(m => m.InvoiceModule),
+          },
+          {
             path: 'plans',
             loadChildren: () => import("./pages/admin/plans/plan.module").then(m => m.PlanModule),
           },

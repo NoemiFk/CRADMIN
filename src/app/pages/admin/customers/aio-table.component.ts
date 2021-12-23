@@ -16,6 +16,7 @@ import icDelete from '@iconify/icons-ic/twotone-delete';
 import icSearch from '@iconify/icons-ic/twotone-search';
 import icAdd from '@iconify/icons-ic/twotone-add';
 import icAnaliys from '@iconify/icons-ic/graphic-eq';
+import icInvoice from '@iconify/icons-ic/twotone-receipt'
 import icFilterList from '@iconify/icons-ic/twotone-filter-list';
 import icDownload from '@iconify/icons-ic/cloud-download';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -30,7 +31,7 @@ import { MatSelectChange } from '@angular/material/select';
 import icPhone from '@iconify/icons-ic/twotone-phone';
 import icMail from '@iconify/icons-ic/twotone-mail';
 import icMap from '@iconify/icons-ic/twotone-map';
-
+import { Router } from '@angular/router';
 import {Services} from '../../../Services/services'
 
 
@@ -105,6 +106,7 @@ export class AioTableComponent implements OnInit, AfterViewInit {
   icMail = icMail;
   icMap = icMap;
   icEdit = icEdit;
+  icInvoice=icInvoice;
   icSearch = icSearch;
   icDelete = icDelete;
   icAdd = icAdd;
@@ -117,7 +119,7 @@ export class AioTableComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(private dialog: MatDialog,  private Services: Services,) {
+  constructor(private dialog: MatDialog,  private Services: Services, private router: Router) {
   }
 
   get visibleColumns() {
@@ -297,6 +299,11 @@ export class AioTableComponent implements OnInit, AfterViewInit {
            //this.error=true
          });
   }
+
+  openInvoices(id) {
+    this.router.navigate(['/admin/invoice/'+id]);
+  }
+
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
     const numSelected = this.selection.selected.length;

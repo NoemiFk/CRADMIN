@@ -220,13 +220,22 @@
         <ng-container matColumnDef="actions">
           <th *matHeaderCellDef mat-header-cell mat-sort-header></th>
           <td *matCellDef="let row" class="w-10 text-secondary" mat-cell>
-            <button (click)="$event.stopPropagation()"
+            <!--button (click)="$event.stopPropagation()"
                     [matMenuTriggerData]="{ customer: row }"
                     [matMenuTriggerFor]="actionsMenu"
                     mat-icon-button
                     type="button">
               <mat-icon [icIcon]="icMoreHoriz"></mat-icon>
-            </button>
+            </button-->
+            <div class="flex">
+              
+              <a (click)=" $event.stopPropagation(); openInvoices(row._id)" 
+              class="w-8 h-8 leading-none flex items-center justify-center hover:bg-hover text-primary bg-primary-light"
+              mat-icon-button matTooltip="Facturas">
+             <mat-icon [icIcon]="icInvoice" size="18px"></mat-icon>
+              </a>
+            </div>
+
           </td>
         </ng-container>
 

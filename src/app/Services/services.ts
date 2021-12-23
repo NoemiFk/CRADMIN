@@ -4,8 +4,8 @@ import { HttpClientModule, /* other http imports */ } from "@angular/common/http
 import { Observable } from 'rxjs/Observable';
 export type ResponseType = 'arraybuffer' | 'blob' | 'json' | 'text';;
 import 'rxjs/add/operator/map'
-const URL="http://localhost:3002"
-//const URL="http://34.221.148.187:3002"
+//const URL="http://localhost:3002"
+const URL="http://54.214.162.22:3002"
 const token=localStorage.getItem('Token')
 //console.log("----",token )
 const httpOptions = {
@@ -30,6 +30,14 @@ export class Services {
                 return resp;
             });
     }
+    getAgency(id:string) {
+        return this.http.get<any>(URL+'/agency/'+id,httpOptions)
+            .map(resp => {
+             
+                //console.log("updateAgency",resp)
+                return resp;
+            });
+      }
     updateAgency(id:string, body:object) {
       return this.http.put<any>(URL+'/agency/'+id,body,httpOptions)
           .map(resp => {
@@ -170,4 +178,13 @@ export class Services {
                 return resp;
             });
       }
+      getInvoice(id:string) {
+        return this.http.get<any>(URL+'/history/agency/'+id,httpOptions)
+            .map(resp => {
+            
+                //console.log("updatePlan",resp)
+                return resp;
+
+            });
+    }
 }
