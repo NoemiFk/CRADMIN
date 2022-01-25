@@ -1,0 +1,80 @@
+<form (ngSubmit)="save()" [formGroup]="form">
+  <div fxLayout="row" fxLayoutAlign="start center" mat-dialog-title>
+    <h2 *ngIf="form.get('name').value"
+        class="headline m-0"
+        fxFlex="auto">Comunicacíon - {{form.get('name').value }}</h2>
+    <h2 *ngIf="!form.get('name').value"
+        class="headline m-0"
+        fxFlex="auto">Nuevo Comunicacíon</h2>
+
+    <!--button [matMenuTriggerFor]="settingsMenu" class="text-secondary" mat-icon-button type="button">
+      <mat-icon [icIcon]="icMoreVert"></mat-icon>
+    </button-->
+
+    <button class="text-secondary" mat-dialog-close mat-icon-button type="button">
+      <mat-icon [icIcon]="icClose"></mat-icon>
+    </button>
+  </div>
+
+  <mat-divider class="-mx-6 text-border"></mat-divider>
+
+  <mat-dialog-content fxLayout="column">
+      
+     
+      
+    <div class="flex flex-col sm:flex-row">
+      <mat-form-field class="mt-6 flex-auto">
+        <mat-label>Nombre de Comunicacíon </mat-label>
+        <input formControlName="name" matInput>
+  
+        <mat-icon aria-hidden="false" aria-label="Example home icon"  class="mr-3" matPrefix>drive_file_rename_outline</mat-icon>
+      </mat-form-field>
+    </div>
+    <div class="flex flex-col sm:flex-row">
+      <mat-form-field class="flex-auto">
+        <mat-label>Descripción </mat-label>
+        <input formControlName="description" matInput>
+  
+        <mat-icon aria-hidden="false" aria-label="Example home icon"  class="mr-3" matPrefix>drive_file_rename_outline</mat-icon>
+      </mat-form-field>
+    </div>
+    <div class="flex flex-col sm:flex-row">
+      
+      <mat-form-field class="flex-auto">
+        <mat-label>Costo</mat-label>
+        <input cdkFocusInitial formControlName="cost" matInput>
+
+        <mat-icon aria-hidden="false" aria-label="Example home icon"  class="mr-3" matPrefix>payments</mat-icon>
+      </mat-form-field>
+
+      <mat-form-field class="sm:ml-6 flex-auto">
+        <mat-label>Precio</mat-label>
+        <input cdkFocusInitial formControlName="price" matInput>
+
+        <mat-icon aria-hidden="false" aria-label="Example home icon"  class="mr-3" matPrefix>payments</mat-icon>
+      </mat-form-field>
+    </div>
+    <div class="flex flex-col sm:flex-row">
+  
+      <mat-form-field class=" flex-auto">
+        <mat-label>Activar comunicacíon</mat-label>
+        
+        <mat-select  matNativeControl name="type"  formControlName="active" >
+          <mat-option [value]=true>Activo</mat-option>
+          <mat-option [value]=false>Inactivo</mat-option>
+        </mat-select >
+
+        <mat-icon aria-hidden="false" aria-label="Example home icon"  class="mr-3" matPrefix>verified_user</mat-icon>
+    </mat-form-field>
+    </div>
+    
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close type="button">CANCELAR</button>
+    <button *ngIf="isCreateMode()" color="primary" mat-flat-button  type="submit">GUARDAR</button>
+    <button *ngIf="isUpdateMode()" color="primary" mat-flat-button  type="submit">GUARDAR</button>
+  </mat-dialog-actions>
+</form>
+
+

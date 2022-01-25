@@ -72,13 +72,13 @@ export class AioTableComponent implements OnInit, AfterViewInit {
   columns: TableColumn<Customer>[] = [
     { label: 'Checkbox', property: 'checkbox', type: 'checkbox', visible: true },
     { label: 'Imagen', property: 'image', type: 'image', visible: false },
-    { label: 'Agencia', property: 'nameAgency', type: 'text', visible: true, cssClasses: ['font-medium'] },
-    { label: 'Razón Social', property: 'bussinesName', type: 'text', visible: false, cssClasses: ['font-medium'] },
-    { label: 'Tipo', property: 'type', type: 'text', visible: false, cssClasses: ['font-medium'] },
-    { label: 'RFC', property: 'RFC', type: 'text', visible: false, cssClasses: ['text-secondary', 'font-medium'] },
-    { label: 'Nombre', property: 'name', type: 'text', visible: true },
-    { label: 'Telefono', property: 'phone', type: 'text', visible: true },
-    { label: 'E-mail', property: 'email', type: 'text', visible: true },
+    { label: 'Cliente', property: 'nameAgency', type: 'text', visible: true, cssClasses: ['font-medium'] },
+    { label: 'Protafolios', property: 'num_protafolios', type: 'text', visible: true, cssClasses: ['font-medium'] },
+    { label: 'Registros activos', property: 'num_registers', type: 'text', visible: true, cssClasses: ['font-medium'] },
+    { label: 'Cliente desde', property: 'created', type: 'date', visible: true, cssClasses: ['text-secondary', 'font-medium'] },
+    { label: 'Plan', property: 'type', type: 'object', object:'contract', visible: true },
+    { label: 'Comunicación', property: 'communication', type: 'boolean', visible: true },
+    { label: 'Proxima Factura', property: 'email', type: 'datehard', visible: true },
     { label: 'Estatus', property: 'status', type: 'boolean', visible: true },
     { label: 'Calle', property: 'address1', type: 'object', object:'address',visible: false, cssClasses: ['text-secondary', 'font-medium'] },
     { label: 'No. Int', property: 'int', type: 'object', object:'address', visible: false },
@@ -99,6 +99,8 @@ export class AioTableComponent implements OnInit, AfterViewInit {
   dataSource: MatTableDataSource<Customer> | null;
   selection = new SelectionModel<Customer>(true, []);
   searchCtrl = new FormControl();
+
+  date = new Date()
 
   labels = aioTableLabels;
 
@@ -169,6 +171,8 @@ export class AioTableComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.date.setMonth(this.date.getMonth() + 1)
+    this.date.setDate(1)
     this.dataSource = new MatTableDataSource();
     this.getAgenciesList();
   }

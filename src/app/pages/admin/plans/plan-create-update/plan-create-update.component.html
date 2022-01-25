@@ -117,7 +117,9 @@
   <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close type="button">CANCELAR</button>
     <button *ngIf="isCreateMode()" color="primary" mat-button type="submit">AGREGAR PLAN</button>
-    <button *ngIf="isUpdateMode()" color="primary" mat-button type="submit">EDITAR PLAN</button>
+    <!-- <button *ngIf="isUpdateMode()" color="primary" mat-button type="submit">EDITAR PLAN</button> -->
+    <button *ngIf="isUpdateMode()" color="primary" mat-flat-button  type="submit">GUARDAR</button>
+
   </mat-dialog-actions>
 </form>
 

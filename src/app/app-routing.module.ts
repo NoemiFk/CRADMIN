@@ -106,6 +106,10 @@ const routes: VexRoutes = [
             loadChildren: () => import("./pages/admin/plans/plan.module").then(m => m.PlanModule),
           },
           {
+            path: 'communications',
+            loadChildren: () => import("./pages/admin/communication/communication.module").then(m => m.CommunicationModule),
+          },
+          {
             path: 'users',
             loadChildren: () => import('./pages/admin/users/users.module').then(m => m.UserModule),
           },

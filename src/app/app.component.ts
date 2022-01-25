@@ -122,7 +122,7 @@ export class AppComponent {
         children: [
           {
             type: 'link',
-            label: 'Agencias',
+            label: 'Clientes',
             route: '/admin/customers',
             icon: icAgencies
           },
@@ -130,6 +130,13 @@ export class AppComponent {
             type: 'link',
             label: 'Planes',
             route: '/admin/plans',
+            icon: icLayers
+          },
+
+          {
+            type: 'link',
+            label: 'Cominicación',
+            route: '/admin/communications',
             icon: icLayers
           },
           {

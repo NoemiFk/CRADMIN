@@ -23,7 +23,8 @@ export class Services {
  constructor(private http: HttpClient) { }
 
     getAgenciesList() {
-        return this.http.get<any>(URL+'/agencies',httpOptions)
+        console.log("HOLAAAAAA", URL+'/agencies')
+        return this.http.get<any>(URL+'/agencies')
             .map(resp => {
              
                 //console.log(" getAgenciesList",resp)
@@ -31,7 +32,7 @@ export class Services {
             });
     }
     getAgency(id:string) {
-        return this.http.get<any>(URL+'/agency/'+id,httpOptions)
+        return this.http.get<any>(URL+'/agency/'+id)
             .map(resp => {
              
                 //console.log("updateAgency",resp)
@@ -39,7 +40,7 @@ export class Services {
             });
       }
     updateAgency(id:string, body:object) {
-      return this.http.put<any>(URL+'/agency/'+id,body,httpOptions)
+      return this.http.put<any>(URL+'/agency/'+id,body)
           .map(resp => {
            
               //console.log("updateAgency",resp)
@@ -55,7 +56,7 @@ export class Services {
           });
     }
     createAgency(body:object) {
-      return this.http.post<any>(URL+'/agency/',body,httpOptions)
+      return this.http.post<any>(URL+'/agency/',body)
           .map(resp => {
            
               //console.log("createAgency",resp)
@@ -63,7 +64,7 @@ export class Services {
           });
     }
     statusAgency(status:boolean, id:string) {
-        return this.http.put<any>(URL+'/agency/'+status+'/'+id,httpOptions)
+        return this.http.put<any>(URL+'/agency/'+status+'/'+id, httpOptions)
             .map(resp => {
                 console.log("statusAgency",resp)
                 return resp;
@@ -80,7 +81,7 @@ export class Services {
             });
     }
     updatePlan(id:string, body:object) {
-      return this.http.put<any>(URL+'/plan/'+id,body,httpOptions)
+      return this.http.put<any>(URL+'/plan/'+id,body)
           .map(resp => {
            
               //console.log("updatePlan",resp)
@@ -97,7 +98,7 @@ export class Services {
           });
     }
     createPlan(body:object) {
-      return this.http.post<any>(URL+'/plan/',body,httpOptions)
+      return this.http.post<any>(URL+'/plan/',body)
           .map(resp => {
            
               //console.log("createPlan",resp)
@@ -114,7 +115,7 @@ export class Services {
 
     // Users
     getUsersList(id:string) {
-      return this.http.get<any>(URL+'/agency/users/'+id, httpOptions)
+      return this.http.get<any>(URL+'/agency/users/'+id)
           .map(resp => {
            
               //console.log("getUsersList",resp)
@@ -122,7 +123,7 @@ export class Services {
           });
     }
     deleteUser(id:string) {
-      return this.http.delete<any>(URL+'/agency/user/'+id, httpOptions)
+      return this.http.delete<any>(URL+'/agency/user/'+id)
           .map(resp => {
           
               //console.log("deleteUser",resp)
@@ -130,7 +131,7 @@ export class Services {
           });
     }
     createUser(body:object) {
-      return this.http.post<any>(URL+'/agency/user',body,httpOptions)
+      return this.http.post<any>(URL+'/agency/user',body)
           .map(resp => {
           
               //console.log("createUser",resp)
@@ -147,7 +148,7 @@ export class Services {
           });
     }
     deleteAdmin(id:string) {
-      return this.http.delete<any>(URL+'/admin/'+id, httpOptions)
+      return this.http.delete<any>(URL+'/admin/'+id)
           .map(resp => {
           
               //console.log("deleteAdmin",resp)
@@ -155,7 +156,7 @@ export class Services {
           });
     }
     createAdmin(body:object) {
-      return this.http.post<any>(URL+'/admin',body,httpOptions)
+      return this.http.post<any>(URL+'/admin',body)
           .map(resp => {
           
               //console.log("createAdmin",resp)
@@ -163,7 +164,7 @@ export class Services {
           });
     }
     updateAdmin(id:string,body:object) {
-        return this.http.put<any>(URL+'/admin/'+id,body,httpOptions)
+        return this.http.put<any>(URL+'/admin/'+id,body)
         .map(resp => {
             
             //console.log("updatePlan",resp)
@@ -179,7 +180,7 @@ export class Services {
             });
       }
       getInvoice(id:string) {
-        return this.http.get<any>(URL+'/history/agency/'+id,httpOptions)
+        return this.http.get<any>(URL+'/history/agency/'+id)
             .map(resp => {
             
                 //console.log("updatePlan",resp)
@@ -187,4 +188,48 @@ export class Services {
 
             });
     }
+
+    getCommunicationsList() {
+        return this.http.get<any>(URL+'/services')
+            .map(resp => {
+             
+                //console.log("getUsersList",resp)
+                return resp;
+            });
+      }
+      deleteCommunication(id:string) {
+        return this.http.delete<any>(URL+'/service/'+id)
+            .map(resp => {
+            
+                //console.log("deleteCommunication",resp)
+                return resp;
+            });
+      }
+      createCommunication(body:object) {
+        return this.http.post<any>(URL+'/service',body)
+            .map(resp => {
+            
+                //console.log("createCommunication",resp)
+                return resp;
+            });
+      }
+      updateCommunication(id:string,body:object) {
+          return this.http.put<any>(URL+'/service/'+id,body)
+          .map(resp => {
+              
+              //console.log("updatePlan",resp)
+              return resp;
+  
+          });
+        }
+        statusCommunication(id:string,body:object) {
+            return this.http.put<any>(URL+'/service/'+id,body)
+            .map(resp => {
+                
+                //console.log("updatePlan",resp)
+                return resp;
+    
+            });
+          }
+        
 }

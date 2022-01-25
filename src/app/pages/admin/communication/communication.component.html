@@ -23,13 +23,13 @@
     <div class="card overflow-auto -mt-16">
       <div class="bg-app-bar px-6 h-16 border-b sticky left-0" fxLayout="row" fxLayoutAlign="start center">
         <h2 class="title my-0 ltr:pr-4 rtl:pl-4 ltr:mr-4 rtl:ml-4 ltr:border-r rtl:border-l" fxFlex="none" fxHide.xs>
-          <span *ngIf="selection.isEmpty()">Clientes</span>
+          <span *ngIf="selection.isEmpty()">Communicationes</span>
           <span *ngIf="selection.hasValue()">{{ selection.selected.length }}
-            Cliente<span *ngIf="selection.selected.length > 1">s</span> selected</span>
+            Communication<span *ngIf="selection.selected.length > 1">s</span> selected</span>
         </h2>
 
         <div *ngIf="selection.hasValue()" class="mr-4 pr-4 border-r" fxFlex="none">
-          <button (click)="deleteCustomers(selection.selected)"
+          <button (click)="deleteCommunications(selection.selected)"
                   color="primary"
                   mat-icon-button
                   matTooltip="Delete selected"
@@ -60,14 +60,7 @@
         <button class="ml-4" fxFlex="none" fxHide.gt-xs mat-icon-button type="button">
           <mat-icon [icIcon]="icSearch"></mat-icon>
         </button>
-        <button (click)="setFoliosToExcel()"
-        class="ml-4"
-        fxFlex="none"
-        mat-icon-button
-        matTooltip="Descargar Clientes"
-        type="button">
-        <mat-icon [icIcon]="icDownload"></mat-icon>
-      </button>
+
         <button [matMenuTriggerFor]="columnFilterMenu"
                 class="ml-4"
                 fxFlex="none"
@@ -77,12 +70,12 @@
           <mat-icon [icIcon]="icFilterList"></mat-icon>
         </button>
 
-        <button (click)="createCustomer()"
+        <button (click)="createCommunication()"
                 class="ml-4"
                 color="primary"
                 fxFlex="none"
                 mat-mini-fab
-                matTooltip="Crear Agencia"
+                matTooltip="Crear Communication"
                 type="button">
           <mat-icon [icIcon]="icAdd"></mat-icon>
         </button>
@@ -110,21 +103,6 @@
             </mat-checkbox>
           </td>
         </ng-container>
-         <!-- Date Columns -->
-         <ng-container *ngFor="let column of columns; trackBy: trackByProperty">
-          <ng-container *ngIf="column.type === 'date'" [matColumnDef]="column.property">
-            <th *matHeaderCellDef class="uppercase" mat-header-cell mat-sort-header> {{ column.label }}</th>
-            <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>{{ row[column.property] | date : "dd-MM-yy"}}</td>
-          </ng-container>
-        </ng-container>
-
-        <!-- Date Columns -->
-        <ng-container *ngFor="let column of columns; trackBy: trackByProperty">
-          <ng-container *ngIf="column.type === 'datehard'" [matColumnDef]="column.property">
-            <th *matHeaderCellDef class="uppercase" mat-header-cell mat-sort-header> {{ column.label }}</th>
-            <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>{{ date | date : "dd-MM-yy"}}</td>
-          </ng-container>
-        </ng-container>
 
         <!-- Image Column -->
         <ng-container matColumnDef="image">
@@ -133,6 +111,23 @@
             <img [src]="row['imageSrc']" class="avatar h-8 w-8 align-middle">
           </td>
         </ng-container>
+
+        <!-- Text Columns -->
+        <ng-container *ngFor="let column of columns; trackBy: trackByProperty">
+          <ng-container *ngIf="column.type === 'text'" [matColumnDef]="column.property">
+            <th *matHeaderCellDef class="uppercase" mat-header-cell mat-sort-header> {{ column.label }}</th>
+            <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>{{ row[column.property]}}</td>
+          </ng-container>
+        </ng-container>
+
+        <!-- Number Columns -->
+        <ng-container *ngFor="let column of columns; trackBy: trackByProperty">
+          <ng-container *ngIf="column.type === 'number'" [matColumnDef]="column.property">
+            <th *matHeaderCellDef class="uppercase" mat-header-cell mat-sort-header> {{ column.label }}</th>
+            <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>{{ row[column.property] | currency}}</td>
+          </ng-container>
+        </ng-container>
+
         <!-- Boolean Columns -->
         <ng-container *ngFor="let column of columns; trackBy: trackByProperty">
           <ng-container *ngIf="column.type === 'boolean'" [matColumnDef]="column.property">
@@ -150,20 +145,7 @@
                   {{ row[column.property]==true?"Activo":"Inactivo"}}
                 </a>
               </div>
-             
             </td>
-          </ng-container>
-        </ng-container>
-
-        <!-- Text Columns -->
-        <ng-container *ngFor="let column of columns; trackBy: trackByProperty">
-          <ng-container *ngIf="column.type === 'text'" [matColumnDef]="column.property">
-            <th *matHeaderCellDef class="uppercase" mat-header-cell mat-sort-header> {{ column.label }}</th>
-            <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>{{ row[column.property] }}</td>
-
-            <!-- <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell *ngIf="column.property == 'contract'">{{ row['contract.type'] }}</td> -->
-            <!-- <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell *ngIf="column.property != 'contract'">{{ row[column.property] }}</td> -->
-
           </ng-container>
         </ng-container>
 
@@ -171,7 +153,7 @@
          <ng-container *ngFor="let column of columns; trackBy: trackByProperty">
           <ng-container *ngIf="column.type === 'object'" [matColumnDef]="column.property">
             <th *matHeaderCellDef class="uppercase" mat-header-cell mat-sort-header> {{ column.label }}</th>
-            <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>{{ row[column.object][column.property] == 'pay' ? 'S' : 'T'}}</td>
+            <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>{{ row[column.object][column.property] }}</td>
           </ng-container>
         </ng-container>
 
@@ -239,27 +221,18 @@
         <ng-container matColumnDef="actions">
           <th *matHeaderCellDef mat-header-cell mat-sort-header></th>
           <td *matCellDef="let row" class="w-10 text-secondary" mat-cell>
-            <!--button (click)="$event.stopPropagation()"
+            <button (click)="$event.stopPropagation()"
                     [matMenuTriggerData]="{ customer: row }"
                     [matMenuTriggerFor]="actionsMenu"
                     mat-icon-button
                     type="button">
               <mat-icon [icIcon]="icMoreHoriz"></mat-icon>
-            </button-->
-            <div class="flex">
-              
-              <a (click)=" $event.stopPropagation(); openInvoices(row._id)" 
-              class="w-8 h-8 leading-none flex items-center justify-center hover:bg-hover text-primary bg-primary-light"
-              mat-icon-button matTooltip="Facturas">
-             <mat-icon [icIcon]="icInvoice" size="18px"></mat-icon>
-              </a>
-            </div>
-
+            </button>
           </td>
         </ng-container>
 
         <tr *matHeaderRowDef="visibleColumns" mat-header-row></tr>
-        <tr (click)="updateCustomer(row)"
+        <tr (click)="updateCommunication(row)"
             *matRowDef="let row; columns: visibleColumns;"
             @fadeInUp
             class="hover:bg-hover trans-ease-out cursor-pointer"
@@ -284,21 +257,13 @@
 
 <mat-menu #actionsMenu="matMenu" xPosition="before" yPosition="below">
   <ng-template let-customer="customer" matMenuContent>
-    <button (click)="updateCustomer(customer)" mat-menu-item>
+    <button (click)="updateCommunication(customer)" mat-menu-item>
       <mat-icon [icIcon]="icEdit"></mat-icon>
       <span>Modificar</span>
     </button>
-    <button (click)="deleteCustomer(customer)" mat-menu-item>
+    <button (click)="deleteCommunication(customer)" mat-menu-item>
       <mat-icon [icIcon]="icDelete"></mat-icon>
       <span>Eliminar</span>
-    </button>
-    <button (click)="usersCustomer(customer)" mat-menu-item>
-      <mat-icon [icIcon]="icAdd"></mat-icon>
-      <span>Agregar usuarios</span>
-    </button>
-    <button (click)="usersCustomer(customer)" mat-menu-item>
-      <mat-icon [icIcon]="icAnaliys"></mat-icon>
-      <span>Dashboard</span>
     </button>
   </ng-template>
 </mat-menu>
